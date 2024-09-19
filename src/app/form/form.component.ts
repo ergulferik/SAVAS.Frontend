@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
-import { BackendService } from '../backend.service';
+import { BackendService } from '../services/backend.service';
 import { saveAs } from 'file-saver';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -141,7 +141,7 @@ export class FormComponent implements OnInit {
         const reader = new FileReader();
         reader.onloadend = () => {
           const pdfUrl = reader.result as string;
-          this.openPdfDialog(pdfUrl); // Dialog'u aç
+          this.openPdfDialog(pdfUrl);
         };
         reader.readAsDataURL(response);
 

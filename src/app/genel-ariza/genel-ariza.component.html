@@ -1,0 +1,115 @@
+<div class="form-container">
+    <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group" formGroupName="genelBilgiler">
+            <h5>Genel Bilgiler</h5>
+            <mat-form-field appearance="fill">
+                <mat-label>Tarih</mat-label>
+                <input matInput [matDatepicker]="picker"
+                    formControlName="tarih">
+                <mat-datepicker-toggle matSuffix
+                    [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Müşteri Adı/Unvanı</mat-label>
+                <input matInput formControlName="musterininAdiUnvani" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Müşteri Adresi</mat-label>
+                <input matInput formControlName="musteriAdresi" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Seri No</mat-label>
+                <input matInput formControlName="seriNo" required />
+            </mat-form-field>
+        </div>
+
+        <div class="form-group" formGroupName="mudahaleNedeni">
+            <h5>Müdahale Nedeni</h5>
+            <mat-checkbox formControlName="ariza">Arıza</mat-checkbox>
+            <mat-checkbox formControlName="tamirat">Tamirat</mat-checkbox>
+            <mat-checkbox formControlName="revizyon">Revizyon</mat-checkbox>
+        </div>
+
+        <div class="form-group" formGroupName="uniteTuru">
+            <h5>Unite türü</h5>
+            <mat-checkbox formControlName="yuruyenMerdiven">Yürüyen Merdiven</mat-checkbox>
+            <mat-checkbox formControlName="engelliPlatform">Engelli Platform</mat-checkbox>
+            <mat-checkbox formControlName="servisPlatform">Servis Platform</mat-checkbox>
+        </div>
+
+        <div class="form-group" formGroupName="binayaGelindigindeUnite">
+            <h5>Binaya Gelindiğinde Unite</h5>
+            <mat-checkbox formControlName="calisiyordu">Çalışıyordu</mat-checkbox>
+            <mat-checkbox formControlName="calismiyordu">Çalışmıyordu</mat-checkbox>
+            <mat-checkbox formControlName="ulasilamadi">Ulaşılamadı</mat-checkbox>
+        </div>
+
+        
+        <div class="form-group" formGroupName="genelAciklamalar">
+            <h5>Genel Açıklamalar</h5>
+            <mat-form-field appearance="fill">
+                <mat-label>Yapılan İş ve Açıklamalar</mat-label>
+                <textarea matInput
+                    formControlName="yapilanIsVeAciklamalar"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Kullanılan/Değişen Yedek Parçalar</mat-label>
+                <textarea matInput
+                    formControlName="kullanilanDegisenYedekParcalar"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Yapılması Gereken İş ve Açıklamalar</mat-label>
+                <textarea matInput
+                    formControlName="yapilmasiGerekenIsVeAciklamalar"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group" formGroupName="binadanAyrilirkenUnite">
+            <h5>Binadan Ayrılırken Ünite</h5>
+            <mat-checkbox formControlName="calisiyordu">Çalışıyordu</mat-checkbox>
+            <mat-checkbox formControlName="calismiyordu">Çalışmıyordu</mat-checkbox>
+        </div>
+
+
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Binaya Giriş Saati</mat-label>
+                <input matInput class="time-picker" type="time" id="appt"
+                    name="appt"
+                    formControlName="binayaGirisSaati">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Binadan Çıkış Saati</mat-label>
+                <input matInput class="time-picker" type="time" id="appt"
+                    name="appt"
+                    formControlName="binadanCikisSaati">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Bina Yetkilisi Ad Soyad</mat-label>
+                <textarea matInput
+                    formControlName="binaYetkilisiAdSoyad" placeholder="Ad SOYAD, Ad SOYAD ..."></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Teknisyen Ad Soyad</mat-label>
+                <textarea matInput
+                    formControlName="teknisyenAdSoyad" placeholder="Ad SOYAD, Ad SOYAD ..."></textarea>
+            </mat-form-field>
+
+        </div>
+
+        <button class="submit-button" mat-raised-button color="primary"
+            type="submit"
+            [disabled]="!serviceForm.valid">Gönder</button>
+    </form>
+</div>

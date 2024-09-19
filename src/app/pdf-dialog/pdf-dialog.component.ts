@@ -15,13 +15,13 @@ export class PdfDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pdfSrc = this.data.pdfSrc; // PDF kaynağını al
+    this.pdfSrc = this.data.pdfSrc;
   }
 
   downloadPDF(): void {
     const link = document.createElement('a');
     link.href = this.pdfSrc || '';
-    link.download = 'document.pdf'; // İndirme adı
+    link.download = 'document.pdf';
     link.click();
   }
 }

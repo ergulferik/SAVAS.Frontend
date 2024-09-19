@@ -1,0 +1,14 @@
+
+.menu-cards{
+    margin-top:calc(10vh + 20px);
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: auto auto;
+    justify-content: space-around;
+    gap:20px;
+    .card{
+        max-width: 40vw;
+        gap: 20px;
+    }
+    
+}

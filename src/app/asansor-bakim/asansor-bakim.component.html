@@ -1,0 +1,227 @@
+<div class="form-container">
+    <form [formGroup]="inspectionForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group" formGroupName="genelBilgiler">
+            <h5>Genel Bilgiler</h5>
+            <mat-form-field appearance="fill">
+                <mat-label>Tarih</mat-label>
+                <input matInput [matDatepicker]="picker"
+                    formControlName="tarih">
+                <mat-datepicker-toggle matSuffix
+                    [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Müşteri Adı</mat-label>
+                <input matInput formControlName="musteriAdi" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Müşteri Adresi</mat-label>
+                <input matInput formControlName="musteriAdresi" required />
+            </mat-form-field>
+
+        </div>
+
+        <div class="form-group" formGroupName="kabinBakimi">
+
+            <h5>Kabin Bakımı</h5>
+            <div class="grid-form">
+                <mat-checkbox formControlName="kapiMekanizmasi">Kapı
+                    Mekanizması</mat-checkbox>
+                <mat-checkbox formControlName="kapiPatenleri">Kapı
+                    Pateni</mat-checkbox>
+                <mat-checkbox
+                    formControlName="makaralar">Makaralar</mat-checkbox>
+                <mat-checkbox formControlName="kabinButonyeri">Kabin
+                    Butonyeri</mat-checkbox>
+                <mat-checkbox formControlName="dijitalGostergeler">Dijital
+                    Göstergeler</mat-checkbox>
+                <mat-checkbox formControlName="halatAskisi">Halat
+                    Askısı</mat-checkbox>
+                <mat-checkbox
+                    formControlName="kapiMekanizmasi">Patenler</mat-checkbox>
+                <mat-checkbox
+                    formControlName="patenler">Yağdanlıklar</mat-checkbox>
+                <mat-checkbox formControlName="yagdanliklar">Klemens
+                    Kutuları</mat-checkbox>
+                <mat-checkbox
+                    formControlName="klemensKutulari">Kontaklar</mat-checkbox>
+                <mat-checkbox formControlName="kontaklar">Duruş
+                    Kalitesi</mat-checkbox>
+                <mat-checkbox formControlName="durusKalitesi">Halat Gevşeme
+                    Kontağı</mat-checkbox>
+                <mat-checkbox formControlName="halatGevsemeKontagi">Revizyon
+                    Butonu</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="form-group" formGroupName="emniyetBakimlari">
+
+            <h5>Emniyet Bakımları</h5>
+            <div class="grid-form">
+                <mat-checkbox formControlName="frenler">Frenler</mat-checkbox>
+                <mat-checkbox formControlName="kapiCamlar">Kapı
+                    Camları</mat-checkbox>
+                <mat-checkbox formControlName="sogutmaFani">Soğutma
+                    Fanı</mat-checkbox>
+                <mat-checkbox formControlName="kapiKilitleri">Kapı
+                    Kilitleri</mat-checkbox>
+                <mat-checkbox formControlName="kapiFisKontaklari">Kapı Fiş
+                    Kontakları</mat-checkbox>
+                <mat-checkbox formControlName="sinyalLambalari">Sinyal
+                    Lambaları</mat-checkbox>
+                <mat-checkbox
+                    formControlName="fotoseller">Fotoseller</mat-checkbox>
+                <mat-checkbox formControlName="stopDugmesi">Stop
+                    düğmesi</mat-checkbox>
+                <mat-checkbox formControlName="alarm">Alarm</mat-checkbox>
+                <mat-checkbox formControlName="tesisatinGenelDurumu">Tesisatın
+                    Genel Durumu</mat-checkbox>
+                <mat-checkbox formControlName="temizlik">Temizlik</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="form-group" formGroupName="makinaDairesiKontrolleri">
+
+            <h5>Makina Dairesi Kontrolleri</h5>
+            <div class="grid-form">
+                <mat-checkbox formControlName="hidrolikKazan">Hidrolik
+                    Kazan</mat-checkbox>
+                <mat-checkbox
+                    formControlName="takometre">Takometre</mat-checkbox>
+                <mat-checkbox formControlName="tahrikKasnagi">Tahrik
+                    Kasnağı</mat-checkbox>
+                <mat-checkbox formControlName="akuplamaDisliBoglugu">Akuplama
+                    Dişli Boğluğu</mat-checkbox>
+                <mat-checkbox formControlName="yatakKontrolu">Yatak
+                    Kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="yag">Yağ</mat-checkbox>
+                <mat-checkbox
+                    formControlName="kontaktorRolu">Kontaktör/Kontaktör
+                    Röle</mat-checkbox>
+                <mat-checkbox formControlName="baglantiKlemensler">Bağlantı
+                    Klemensler</mat-checkbox>
+                <mat-checkbox formControlName="motorKabloFani">Motor Kablo
+                    Fanı</mat-checkbox>
+                <mat-checkbox formControlName="kumandaGerilimOlcumu">Kumanda
+                    Gerilim Ölçümü</mat-checkbox>
+                <mat-checkbox formControlName="anaSalter">Ana
+                    Şalter</mat-checkbox>
+                <mat-checkbox formControlName="frenManyetik">Fren
+                    Manyetik</mat-checkbox>
+                <mat-checkbox formControlName="saptrmaKasnagi">Saptırma
+                    Kasnağı</mat-checkbox>
+                <mat-checkbox formControlName="kumandaTablosu">Kumanda
+                    Ttablosu</mat-checkbox>
+                <mat-checkbox formControlName="makinaMotorTemizligi">Makina
+                    Motor Temizliği</mat-checkbox>
+                <mat-checkbox formControlName="makinaDairesiTemizligi">Makina
+                    Dairesi Temizliği</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="form-group" formGroupName="kuyuVeKabinBaglantilari">
+
+            <h5>Kuyu ve Kabin Bağlantıları</h5>
+            <div class="grid-form">
+                <mat-checkbox formControlName="kapiKontaklari">Kapı
+                    Kontakları</mat-checkbox>
+                <mat-checkbox formControlName="kapiYayiVeZinciri">Kapı Yayı ve
+                    Zinciri</mat-checkbox>
+                <mat-checkbox formControlName="kapiAcmaManyetigi">Kapı Açma
+                    Manyetiği</mat-checkbox>
+                <mat-checkbox formControlName="kapiDiktatoru">Kapı
+                    Diktatörü</mat-checkbox>
+                <mat-checkbox formControlName="otomatikKapisiKayislari">Otomatik
+                    Kapışı Kayışları</mat-checkbox>
+                <mat-checkbox formControlName="makaralarMekanizmalar">Makaralar
+                    Mekanizmalar</mat-checkbox>
+                <mat-checkbox formControlName="svicler">Sviçler</mat-checkbox>
+                <mat-checkbox formControlName="kapiMotorFren">Kapı
+                    Motor-Fren</mat-checkbox>
+                <mat-checkbox
+                    formControlName="otomatikKapiPanelVeKablosu">Otomatik Kapı
+                    Panel ve Kablosu</mat-checkbox>
+                <mat-checkbox
+                    formControlName="butonyerler">Butonyerler</mat-checkbox>
+                <mat-checkbox formControlName="kuyuBilgiSetleri">Kuyu Bilgi
+                    Setleri</mat-checkbox>
+                <mat-checkbox
+                    formControlName="fleksibilKabloKontrolu">Fleksibilkablo
+                    Kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="saptirmaMakaralari">Saptırma
+                    Makaraları</mat-checkbox>
+                <mat-checkbox formControlName="katKapilari">Kat
+                    Kapıları</mat-checkbox>
+                <mat-checkbox formControlName="kilitKollariAyarlar">Kilit
+                    Kolları Ayarları</mat-checkbox>
+                <mat-checkbox formControlName="halatGevsemeKontagi">Halat
+                    Gevşeme Kontağı</mat-checkbox>
+                <mat-checkbox formControlName="limitSalterleri">Limit
+                    Şalterleri</mat-checkbox>
+                <mat-checkbox formControlName="kabinVeAgirlikRayTijleri">Kabin
+                    ve Ağırlık Ray ve Tijleri</mat-checkbox>
+                <mat-checkbox
+                    formControlName="regulatorKarsiAgirlikSvic">Regülatör Karşı
+                    Ağırlık ve Sviç</mat-checkbox>
+                <mat-checkbox
+                    formControlName="takometre">Takometre</mat-checkbox>
+                <mat-checkbox formControlName="dengeZinciri">Denge
+                    Zinciri</mat-checkbox>
+                <mat-checkbox formControlName="tamponVeSvicler">Tampon ve
+                    Sviçler</mat-checkbox>
+                <mat-checkbox formControlName="kabinHalatlari">Kabin
+                    Halatları</mat-checkbox>
+                <mat-checkbox formControlName="hidrolikPiston">Hidrolik
+                    Piston</mat-checkbox>
+                <mat-checkbox formControlName="kutuVeKuyuDibiTemizligi">Kutu ve
+                    Kuyu dibi Temizliği</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Yedek Parça Ve Açıklamalar</mat-label>
+                <textarea matInput
+                    formControlName="yedekParcaAciklama"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Bakım Ekibi</mat-label>
+                <textarea matInput
+                    formControlName="bakimEkibi" placeholder="Ad SOYAD, Ad SOYAD ..."></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Yetkili</mat-label>
+                <textarea matInput
+                    formControlName="yetkili" placeholder="Ad SOYAD"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>İstek ve Düşünceler</mat-label>
+                <textarea matInput
+                    formControlName="istekVeDusunceler" ></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Başlangıç Saati</mat-label>
+                <input matInput  class="time-picker" type="time" id="appt" name="appt" 
+                    formControlName="baslangicSaati" >
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Bitiş Saati</mat-label>
+                <input matInput  class="time-picker" type="time" id="appt" name="appt" 
+                    formControlName="bitisSaati" >
+            </mat-form-field>
+
+        </div>
+
+        
+        <button class="submit-button" mat-raised-button color="primary" type="submit"
+        [disabled]="!inspectionForm.valid || !isSubmitActive">Gönder</button>
+    </form>
+</div>

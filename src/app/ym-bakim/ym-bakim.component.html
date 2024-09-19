@@ -1,0 +1,136 @@
+<div class="form-container">
+    <form [formGroup]="inspectionForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group" formGroupName="genelBilgiler">
+            <h5>Genel Bilgiler</h5>
+            <mat-form-field appearance="fill">
+                <mat-label>Tarih</mat-label>
+                <input matInput [matDatepicker]="picker"
+                    formControlName="tarih">
+                <mat-datepicker-toggle matSuffix
+                    [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Müşteri Adı</mat-label>
+                <input matInput formControlName="musteriAdi" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Müşteri Adresi</mat-label>
+                <input matInput formControlName="musteriAdresi" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Müdahele Saati</mat-label>
+                <input matInput class="time-picker" type="time" id="appt"
+                    name="appt"
+                    formControlName="mudahaleSaati">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Bitiş Saati</mat-label>
+                <input matInput class="time-picker" type="time" id="appt"
+                    name="appt"
+                    formControlName="bitisSaati">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Kullanılan Malzeme ve Özellikleri</mat-label>
+                <textarea matInput
+                    formControlName="kullanilanMalzemeVeOzellikleri"></textarea>
+            </mat-form-field>
+
+        </div>
+
+        <div class="form-group" formGroupName="mudahaleNedeni">
+            <h5>Müdahale Nedeni</h5>
+            <mat-checkbox formControlName="bakim">
+                Bakım</mat-checkbox>
+            <mat-checkbox formControlName="ariza">Arıza</mat-checkbox>
+            <mat-checkbox formControlName="diger">Diğer</mat-checkbox>
+        </div>
+
+        <div class="form-group" formGroupName="herAyYapilmasiGerekenler">
+
+            <h5>Her Ay Yapılması Gerekenler</h5>
+            <div >
+                <mat-checkbox formControlName="ustVeAltMakinaDairesiTemizligi">Üst ve alt makina dairelerinin temizlenmesi</mat-checkbox>
+                <mat-checkbox formControlName="basamakRaylariTemizligi">Basamak Raylarının temizlenmesi</mat-checkbox>
+                <mat-checkbox formControlName="basamakZinciriGergiKontroluYaglama">Basamak zincirinin gergi kontrolü ve yağlanması</mat-checkbox>
+                <mat-checkbox formControlName="emniyetDevresiZincirKontakKontrolu">Emniyet devresi zincir geri kontalarının kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="basamakEteklikMesafeKontrolu">basamak ile eteklik arasındaki mesafelerin kontrolü </mat-checkbox>
+                <mat-checkbox formControlName="emniyetDevresiEtekSaciKontakKontrolu">Emniyet devresi etek sacı sıkışma kontaklarının kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="basamakYuzeyKontrolu">Basamak yüzeylerinin fiziki kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="basamakKilavuzPapuclarGreslenmesi">Basamak kılavuz papuçlarının greslenmesi</mat-checkbox>
+                <mat-checkbox formControlName="emniyetDevresiBasamakSarkmaKontakKontrolu">Emniyet devresi basamak sarkma kontaklarının kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="tarakElemanlariKontrolu">Tarak elemanlarının kontrolü ve basamak taraklarına girişin kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="emniyetDevresiTarakKontakKontrolu">Emniyet devresi tarak kontaklarının kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="kupesteBandiTahrikZincirKontrolu">Küpeşte bandı tahrik zincirinin kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="dublexTahrikZincirGergiKontrolu">Dublex tahrik zincirinin gergisinin kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="emniyetDevresiTahrikZincirKopmaKontrolu">Emniyet devresi tahrik zinciri kopma kontağının kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="otomatikYaglamaUnitesiYagSeviyeKontrolu">Otomatik yağlama ünitesi yağ seviyesinin tamamlanması</mat-checkbox>
+                <mat-checkbox formControlName="kupesteBandiGerginlikKontrolu">Küpeşte bandının gerginliğinin kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="kupesteBandiRulmanKontrolu">Küpeşte bandı dönüş eğrisi rulmanlarının kontrolü ve ayarlama</mat-checkbox>
+                <mat-checkbox formControlName="emniyetDevresiKupesteBandiKontrolu">Emniyet devresi küpeşte bandı giriş kontaklarının kontolü</mat-checkbox>
+                <mat-checkbox formControlName="istikametAnahtariAcilStopKontrolu">İstikamet anahtarlarının ve acil stop butonlarının kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="frenMagnetKontrolu">Fren magnetinin çalışma kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="sonsuzDisliYagSeviyeKontrolu">Sonsuz dişli yap seviyesi kontrolü</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="form-group" formGroupName="altiAydaBirYapilmasiGerekenler">
+
+            <h5>Altı Ayda Bir Yapılması Gerkenler</h5>
+            <div>
+                <mat-checkbox formControlName="tarakVidalarGreslenmesi">Tarak bağlantı vidalarının sökülerek greslenmesi</mat-checkbox>
+                <mat-checkbox formControlName="motorBakimi">Motor bakımı</mat-checkbox>
+                <mat-checkbox formControlName="frenPapuclarDurmaKontrolu">Fren papuçları, balata ve durma mesafesi kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="otomatikZincirYaglamaKontrolu">Otomatik zinci yağlama ünitesi kontrolü ve yağ seviyesi tamamlanması</mat-checkbox>
+            </div>
+        </div>
+        <div class="form-group" formGroupName="yildaBirYapilmasiGerekenler">
+
+            <h5>Yılda Bir Yapılması Gerekenler</h5>
+            <div>
+                <mat-checkbox formControlName="basamakMakaralariKontrolu">Basamak makaralarının, klavuz papıçlarının ve plastik mil yataklarının kontrolü</mat-checkbox>
+                <mat-checkbox formControlName="tahrikZincirTemizligi">Tüm tahrik zincilerinin temizlenmesi</mat-checkbox>
+                <mat-checkbox formControlName="merdivenAnaTahrikSaftKontrolu">Merdiven ana tahrik şaftının kontrolü, genel temizliği, rulmanların yağlanması</mat-checkbox>
+                <mat-checkbox formControlName="kupesteBandiTahrikSaftKontrolu">Küpeşte bandı tahrik şaftının kontrolü, genel temizliği, rulman yağlanması</mat-checkbox>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Şikayet</mat-label>
+                <textarea matInput
+                    formControlName="sikayet"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Netice</mat-label>
+                <textarea matInput
+                    formControlName="netice"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Bina Yöneticisi Adı Soyadı</mat-label>
+                <textarea matInput
+                    formControlName="binaYoneticisiAdiSoyadi" placeholder="Ad SOYAD, Ad SOYAD ..."></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Arıza Bakım Montörünün Adı Soyadı</mat-label>
+                <textarea matInput
+                    formControlName="arizaBakimMontorAdiSoyadi" placeholder="Ad SOYAD, Ad SOYAD ..."></textarea>
+            </mat-form-field>
+
+        </div>
+
+        <button class="submit-button" mat-raised-button color="primary"
+            type="submit"
+            [disabled]="!inspectionForm.valid">Gönder</button>
+    </form>
+</div>

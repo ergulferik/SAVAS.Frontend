@@ -1,0 +1,86 @@
+@defer (when dataSource && dataSource.length > 0) {
+<div id="data-grid-demo" class="grid-wrapper" style="max-width: 100%;">
+    <dx-data-grid
+        id="gridContainer"
+        [dataSource]="dataSource"
+        keyExpr="_id"
+        [showBorders]="true"
+        [columnAutoWidth]="true"
+        [columnResizingMode]="'nextColumn'"
+        [allowColumnResizing]="true"
+        [allowColumnReordering]="true"
+        (onRowInserting)="onInserting($event)"
+        (onRowRemoving)="onRemove($event)"
+        (onRowUpdating)="onUpdating($event)"
+        (onExporting)="onExporting($event)"
+        height='80vh'
+        width="90vw">
+
+        <dxo-selection mode="single"></dxo-selection>
+        <dxo-scrolling
+            mode="infinite">
+        </dxo-scrolling>
+        <dxo-column-chooser
+            height="340px"
+            #columnChooser
+            [enabled]="true"
+            mode="select">
+            <dxo-position
+                my="right top"
+                at="right bottom"
+                of=".dx-datagrid-column-chooser-button"></dxo-position>
+
+            <dxo-search
+                [enabled]="true"
+                [editorOptions]="{ placeholder: 'Sütün Ara...' }"></dxo-search>
+
+            <dxo-selection
+                [selectByClick]="true"
+                [recursive]="true"></dxo-selection>
+        </dxo-column-chooser>
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+        <dxo-filter-row
+            [visible]="true"></dxo-filter-row>
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxo-paging [enabled]="true"></dxo-paging>
+        <dxo-editing
+            mode="popup"
+            [allowUpdating]="true"
+            [allowAdding]="true"
+            [allowDeleting]="true"
+            [useIcons]="true">
+            <dxo-popup
+                title="Kullanıcı"
+                [showTitle]="true">
+            </dxo-popup>
+
+        </dxo-editing>
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+
+        <dxi-column dataField="name" caption="Ad"
+            [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+        <dxi-column dataField="surname" caption="Soyadı"
+            [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+        <dxi-column dataField="phone" caption="Telefon"
+            [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+        <dxi-column dataField="password" caption="Şifre">
+            <dxi-validation-rule 
+            type="required"
+            message="Bu alan zorunludur."></dxi-validation-rule>
+            <dxi-validation-rule
+              type="stringLength"
+              [min]="6"
+              message="Şifre en az 6 karakter içermelidir"
+            ></dxi-validation-rule></dxi-column>
+        <dxi-column dataField="role" caption="Rol"
+            [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'>
+            <dxo-lookup [dataSource]="roleOptions" displayExpr="name"
+                valueExpr="value"></dxo-lookup>
+        </dxi-column>
+
+    </dx-data-grid>
+</div>
+}@placeholder {
+
+}

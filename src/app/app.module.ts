@@ -13,22 +13,39 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
-import { BackendService } from './backend.service';
+import { BackendService } from './services/backend.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DcToastNgModule } from 'dc-toast-ng';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfDialogComponent } from './pdf-dialog/pdf-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
-import { YMBComponent } from './ymb/ymb.component';
-import {MatStepperModule} from '@angular/material/stepper';
+import { AsansorBakimComponent } from './asansor-bakim/asansor-bakim.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { YmBakimComponent } from './ym-bakim/ym-bakim.component';
+import { GenelArizaComponent } from './genel-ariza/genel-ariza.component';
+import { MenuComponent } from './menu/menu.component';
+import { AdminAsansorBakimComponent } from './admin-asansor-bakim/admin-asansor-bakim.component';
+import { DxButtonModule, DxDataGridModule, DxDateBoxModule, DxSelectBoxModule, DxValidatorModule } from 'devextreme-angular';
+import { UserComponent } from './user/user.component';
+import { LoginComponent } from './login/login.component';
+import { AdminGenelArizaComponent } from './admin-genel-ariza/admin-genel-ariza.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
     PdfDialogComponent,
-    YMBComponent
+    AsansorBakimComponent,
+    YmBakimComponent,
+    GenelArizaComponent,
+    MenuComponent,
+    AdminAsansorBakimComponent,
+    UserComponent,
+    LoginComponent,
+    AdminGenelArizaComponent
   ],
   imports: [
     BrowserModule,
@@ -46,14 +63,20 @@ import {MatStepperModule} from '@angular/material/stepper';
     PdfViewerModule,
     MatDialogModule,
     MatIconModule,
-    MatStepperModule
-
+    MatCardModule,
+    MatProgressBarModule,
+    MatCheckboxModule,
+    DxButtonModule,
+    DxDataGridModule,
+    DxSelectBoxModule,
+    DxDateBoxModule,
+    DxValidatorModule
 
   ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
-    BackendService
+    BackendService,
   ],
   bootstrap: [AppComponent]
 })

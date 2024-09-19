@@ -1,0 +1,170 @@
+<div class="asansor-bakim-wrapper">
+    <div class="custom-toolbar">
+        <dx-select-box
+            [dataSource]="months"
+            [value]="selectedMonth"
+            (valueChange)="onMonthChange($event)"
+            placeholder="Ay Seçin"></dx-select-box>
+
+        <dx-select-box
+            [dataSource]="years"
+            [value]="selectedYear"
+            (valueChange)="onYearChange($event)"
+            placeholder="Yıl Seçin"></dx-select-box>
+    </div>
+
+    @defer (when dataSource && dataSource.length > 0) {
+    <div id="data-grid-demo" style="max-width: 100%;">
+        <dx-data-grid
+            id="gridContainer"
+            [dataSource]="dataSource"
+            keyExpr="_id"
+            [showBorders]="true"
+            [columnAutoWidth]="true"
+            [columnResizingMode]="'nextColumn'"
+            [allowColumnResizing]="true"
+            [allowColumnReordering]="true"
+            (onRowInserting)="onInserting($event)"
+            (onRowRemoving)="onRemove($event)"
+            (onRowUpdating)="onUpdating($event)"
+            (onExporting)="onExporting($event)"
+            height='80vh'
+            width="90vw">
+
+            <dxo-selection mode="single"></dxo-selection>
+            <dxo-scrolling
+                mode="infinite">
+            </dxo-scrolling>
+            <dxo-column-chooser
+                height="340px"
+                #columnChooser
+                [enabled]="true"
+                mode="select">
+                <dxo-position
+                    my="right top"
+                    at="right bottom"
+                    of=".dx-datagrid-column-chooser-button"></dxo-position>
+
+                <dxo-search
+                    [enabled]="true"
+                    [editorOptions]="{ placeholder: 'Sütün Ara...' }"></dxo-search>
+
+                <dxo-selection
+                    [selectByClick]="true"
+                    [recursive]="true"></dxo-selection>
+            </dxo-column-chooser>
+            <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+            <dxo-export [enabled]="true"
+                [allowExportSelectedData]="true"></dxo-export>
+            <dxo-filter-row
+                [visible]="true"></dxo-filter-row>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-paging [enabled]="true"></dxo-paging>
+            <dxo-editing
+                mode="popup"
+                [allowUpdating]="true"
+                [allowAdding]="true"
+                [allowDeleting]="true"
+                [useIcons]="true">
+                <dxo-popup
+                    title="Genel Arıza Formu"
+                    [showTitle]="true">
+                </dxo-popup>
+
+            </dxo-editing>
+            <dxi-column dataField="genelBilgiler.tarih"
+                caption="Tarih"
+                dataType="date"
+                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+            <dxi-column dataField="genelBilgiler.musterininAdiUnvani"
+                caption="Müşterinin Adı/Ünvanı"
+                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+            <dxi-column dataField="genelBilgiler.musteriAdresi"
+                caption="Müşteri Adresi"
+                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+            <dxi-column dataField="genelBilgiler.seriNo"
+                caption="Seri No"
+                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+            <dxi-column dataField="mudaheleNedeni.ariza"
+                caption="Arıza"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="mudaheleNedeni.tamirat"
+                caption="Tamirat"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="mudaheleNedeni.revizyon"
+                caption="Revizyon"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="uniteTuru.yuruyenMerdiven"
+                caption="Yürüyen Merdiven"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="uniteTuru.engelliPlatform"
+                caption="Engelli Platform"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="uniteTuru.servisPlatform"
+                caption="Servis Platform"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="binayaGelindigindeUnite.calisiyordu"
+                caption="Çalışıyordu (Binaya Gelindiğinde)"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="binayaGelindigindeUnite.calismiyordu"
+                caption="Çalışmıyordu (Binaya Gelindiğinde)"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="binayaGelindigindeUnite.ulasalamadi"
+                caption="Ulaşılamadı (Binaya Gelindiğinde)"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="genelAciklamalar.yapilanIsVeAciklamalar"
+                caption="Yapılan İş ve Açıklamalar"></dxi-column>
+
+            <dxi-column
+                dataField="genelAciklamalar.kullanilanDegisenYedekParcalar"
+                caption="Kullanılan Değişen Yedek Parçalar"></dxi-column>
+
+            <dxi-column
+                dataField="genelAciklamalar.yapilmasiGerekenIsVeAciklamalar"
+                caption="Yapılması Gereken İş ve Açıklamalar"></dxi-column>
+
+            <dxi-column dataField="binadanAyrilirkenUnite.calisiyordu"
+                caption="Çalışıyordu (Binadan Ayrılırken)"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="binadanAyrilirkenUnite.calismiyordu"
+                caption="Çalışmıyordu (Binadan Ayrılırken)"
+                dataType="boolean"></dxi-column>
+
+            <dxi-column dataField="binayaGirisSaati"
+                caption="Binaya Giriş Saati"
+                dataType="date"
+                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+            <dxi-column dataField="binadanCikisSaati"
+                caption="Binadan Çıkış Saati"
+                dataType="date"
+                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+            <dxi-column dataField="binaYetkilisiAdSoyad"
+                caption="Bina Yetkilisi Ad Soyad"
+                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+            <dxi-column dataField="teknisyenAdSoyad"
+                caption="Teknisyen Ad Soyad"
+                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+        </dx-data-grid>
+    </div>
+    }@placeholder {
+
+    }
+</div>

@@ -1,0 +1,29 @@
+<mat-card class="login-card">
+    <mat-card-title >Giriş Yap</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Telefon No</mat-label>
+          <span matPrefix>&nbsp; +90 &nbsp;</span>
+          <input type="tel" matInput formControlName="phone" placeholder="555-555-1234">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+          <mat-error *ngIf="form.get('phone')?.hasError('required')">
+            Telefon numarası zorunludur.
+          </mat-error>
+          <mat-error *ngIf="form.get('phone')?.hasError('pattern')">
+            Telefon numarası formatı geçersiz.
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Şifre</mat-label>
+          <input type="password" matInput formControlName="password" placeholder="Şifre">
+        </mat-form-field>
+  
+        <div class="button-container">
+          <button [disabled]="!form.valid || !isSubmitActive" class="submit-button" type="submit" mat-raised-button color="primary">Login</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

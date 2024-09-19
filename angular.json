@@ -41,6 +41,11 @@
                 "glob": "**/*",
                 "input": "./node_modules/dc-toast-ng/assets",
                 "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
               }
             ],
             "styles": [
@@ -112,5 +117,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
