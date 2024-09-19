@@ -1,0 +1,17 @@
+.dialog-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .form-title{
+    font-size: 32px;
+    padding-top: 6px;
+    font-weight: 500;
+    color: var(--mat-protected-button-state-layer-color);
+  }
+
+  .close-button{
+    color: var(--mat-form-field-error-text-color);
+
+  }

@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm),div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){
+    border-radius: var(--mdc-protected-button-container-shape, var(--mat-app-corner-full)) !important;
+}
+
+div:where(.swal2-container) div:where(.swal2-popup){
+    border-radius: var(--mdc-dialog-container-shape, var(--mat-app-corner-extra-large, 4px)) !important;
+}

@@ -1,0 +1,33 @@
+/* Formu tam sayfanın ortasına getirmek için */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Yüksekliği tam ekran yapar */
+  margin: 0;
+}
+
+form {
+  max-width: 600px;
+  width: 100%; /* Genişliği %100 yaparak esnekliğini arttırır */
+  background: #fff; /* Arka plan rengi ekleyin */
+  padding: 20px; /* İçeride biraz boşluk bırakın */
+  border-radius: var(--mdc-dialog-container-shape, var(--mat-app-corner-extra-large, 4px)) !important; /* Kenarları yuvarlatır */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Hafif gölge efekti */
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+input:read-only {
+  pointer-events: none;
+  opacity: 0.5;
+  transition: none !important;
+}
