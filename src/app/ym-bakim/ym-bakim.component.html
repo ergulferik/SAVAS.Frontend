@@ -131,6 +131,6 @@
 
         <button class="submit-button" mat-raised-button color="primary"
             type="submit"
-            [disabled]="!inspectionForm.valid">Gönder</button>
+            [disabled]="!inspectionForm.valid || !isSubmitActive">Gönder</button>
     </form>
 </div>

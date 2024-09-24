@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BackendService } from '../services/backend.service';
+import { PdfDialogComponent } from '../pdf-dialog/pdf-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-ym-bakim',
@@ -8,11 +11,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class YmBakimComponent {
   inspectionForm: FormGroup;
+  isSubmitActive:boolean = true
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private backend:BackendService,
+    private dialog: MatDialog
+  ) {
     this.inspectionForm = this.fb.group({
       genelBilgiler: this.fb.group({
-        tarih: ['', Validators.required],
+        tarih: [new Date(), Validators.required],
         musteriAdi: ['', Validators.required],
         musteriAdresi: ['', Validators.required],
         mudahaleSaati: ['', Validators.required],
@@ -67,6 +73,38 @@ export class YmBakimComponent {
   }
 
   onSubmit() {
-    console.log(this.inspectionForm.value);
+    this.isSubmitActive = false;
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const formData = { 
+      ...this.inspectionForm.value, 
+      user: {
+        name: userData.name || '',
+        surname: userData.surname || '', 
+        phone: userData.phone || ''
+      } 
+    }; 
+
+    this.backend.addDataBlob('escalator-maintenance', formData).subscribe((res) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const pdfUrl = reader.result as string;
+        this.openPdfDialog(pdfUrl);
+      };
+
+      reader.readAsDataURL(new Blob([res]));
+    });
+  }
+
+  openPdfDialog(pdfUrl: string): void {
+    const dialogRef = this.dialog.open(PdfDialogComponent, {
+      data: { pdfSrc: pdfUrl },
+      width: '80%',
+      height: '80%',
+      disableClose: true 
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.isSubmitActive = true;
+    });
   }
 }

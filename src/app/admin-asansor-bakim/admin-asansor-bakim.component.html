@@ -33,8 +33,13 @@
 
             <dxo-selection mode="single"></dxo-selection>
             <dxo-scrolling
-                mode="infinite">
+            rowRenderingMode="virtual">
             </dxo-scrolling>
+            <dxo-pager
+            [visible]="true"
+            displayMode="full"
+            [showInfo]="true"
+          ></dxo-pager>
             <dxo-column-chooser
                 height="340px"
                 #columnChooser
@@ -81,6 +86,11 @@
             <dxi-column dataField="user.phone"
                 caption="Telefon"
                 [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+                <dxi-column dataField="createdAt" dataType="date"
+                caption="Oluşturulma tarihi"
+                [allowEditing]="false"
+                ></dxi-column>
 
             <dxi-column dataField="genelBilgiler.tarih" dataType="date"
                 caption="Tarih"

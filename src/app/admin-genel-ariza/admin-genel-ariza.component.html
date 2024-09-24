@@ -33,8 +33,13 @@
 
             <dxo-selection mode="single"></dxo-selection>
             <dxo-scrolling
-                mode="infinite">
+            rowRenderingMode="virtual">
             </dxo-scrolling>
+            <dxo-pager
+            [visible]="true"
+            displayMode="full"
+            [showInfo]="true"
+          ></dxo-pager>
             <dxo-column-chooser
                 height="340px"
                 #columnChooser
@@ -72,6 +77,21 @@
                 </dxo-popup>
 
             </dxo-editing>
+
+            <dxi-column dataField="user.name"
+            caption="Ad"
+            [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+        <dxi-column dataField="user.surname"
+            caption="Soyad"
+            [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+        <dxi-column dataField="user.phone"
+            caption="Telefon"
+            [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
+
+            <dxi-column dataField="createdAt" dataType="date"
+            caption="Oluşturulma tarihi"
+            [allowEditing]="false"
+            ></dxi-column>
             <dxi-column dataField="genelBilgiler.tarih"
                 caption="Tarih"
                 dataType="date"
@@ -146,12 +166,14 @@
 
             <dxi-column dataField="binayaGirisSaati"
                 caption="Binaya Giriş Saati"
-                dataType="date"
+                dataType="datetime"
+                format="shortTime"
                 [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
 
             <dxi-column dataField="binadanCikisSaati"
                 caption="Binadan Çıkış Saati"
-                dataType="date"
+                dataType="datetime"
+                format="shortTime"
                 [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
 
             <dxi-column dataField="binaYetkilisiAdSoyad"
