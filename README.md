@@ -28,10 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## For Deploy
    - ng build --configuration production --base-href "https://ergulferik.github.io/SAVAS.Frontend/"
-   - cd dist/frontend
-   - git init     
-   - git add .
-   - git commit -m "Deploy to GitHub Pages"
-   - git branch -M gh-pages
-   - git remote add origin https://github.com/ergulferik/SAVAS.Frontend.git
-   - git push -u origin gh-pages --force
+   - dist/SAVAS.Fronted dizini içerisinde index html ve diğer dosyalar olmalıdır, eğerki browser dosyası altındaysa onları ana dizine taşı.
+   - npx angular-cli-ghpages --dir=dist/SAVAS.Frontend
