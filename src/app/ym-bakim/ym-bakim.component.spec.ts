@@ -8,9 +8,8 @@ describe('YmBakimComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [YmBakimComponent]
-    })
-    .compileComponents();
+      declarations: [YmBakimComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(YmBakimComponent);
     component = fixture.componentInstance;

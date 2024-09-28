@@ -12,7 +12,10 @@ form {
   width: 100%; /* Genişliği %100 yaparak esnekliğini arttırır */
   background: #fff; /* Arka plan rengi ekleyin */
   padding: 20px; /* İçeride biraz boşluk bırakın */
-  border-radius: var(--mdc-dialog-container-shape, var(--mat-app-corner-extra-large, 4px)) !important; /* Kenarları yuvarlatır */
+  border-radius: var(
+    --mdc-dialog-container-shape,
+    var(--mat-app-corner-extra-large, 4px)
+  ) !important; /* Kenarları yuvarlatır */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Hafif gölge efekti */
 }
 

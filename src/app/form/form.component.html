@@ -1,88 +1,124 @@
 <div class="form-container">
+  <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
+    <h3 style="display: flex; justify-content: center">Bakım Formu</h3>
+    <!-- Bakım Formu ID -->
+    <div>
+      <mat-form-field appearance="fill" (click)="copyToClipboard()">
+        <mat-label>Bakım Formu ID</mat-label>
+        <input matInput formControlName="maintenanceId" readonly />
+      </mat-form-field>
+    </div>
 
-<form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
-  <h3 style="display: flex; justify-content: center;"> Bakım Formu</h3>
-  <!-- Bakım Formu ID -->
-  <div>
-    <mat-form-field appearance="fill" (click)="copyToClipboard()">
-      <mat-label>Bakım Formu ID</mat-label>
-      <input matInput formControlName="maintenanceId" readonly>
-    </mat-form-field>
-  </div>
+    <!-- Bir Yer Seçin -->
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Bir yer seçin</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="locationControl"
+          [matAutocomplete]="auto"
+          placeholder="İstasyon ara"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-optgroup
+            *ngFor="let group of filteredLocations | async"
+            [label]="group.group"
+          >
+            <mat-option *ngFor="let location of group.items" [value]="location">
+              {{ location }}
+            </mat-option>
+          </mat-optgroup>
+        </mat-autocomplete>
+        <mat-error
+          *ngIf="maintenanceForm.get('locationControl')?.hasError('required')"
+        >
+          Bir yer seçmek zorunludur.
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-  <!-- Bir Yer Seçin -->
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Bir yer seçin</mat-label>
-      <input type="text" matInput formControlName="locationControl" [matAutocomplete]="auto" placeholder="İstasyon ara">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-optgroup *ngFor="let group of filteredLocations | async" [label]="group.group">
-          <mat-option *ngFor="let location of group.items" [value]="location">
-            {{ location }}
-          </mat-option>
-        </mat-optgroup>
-      </mat-autocomplete>
-      <mat-error *ngIf="maintenanceForm.get('locationControl')?.hasError('required')">
-        Bir yer seçmek zorunludur.
-      </mat-error>
-    </mat-form-field>
-  </div>
+    <!-- Bakımı Yapan Kişi -->
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Bakımı Yapan Kişi</mat-label>
+        <input matInput formControlName="maintenancePerson" required />
+        <mat-error
+          *ngIf="maintenanceForm.get('maintenancePerson')?.hasError('required')"
+        >
+          Bakımı yapan kişi zorunludur.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            maintenanceForm.get('maintenancePerson')?.hasError('minlength')
+          "
+        >
+          Bakımı yapan kişi en az 3 karakter olmalıdır.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            maintenanceForm.get('maintenancePerson')?.hasError('maxlength')
+          "
+        >
+          Bakımı yapan kişi en fazla 64 karakter olmalıdır.
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-  <!-- Bakımı Yapan Kişi -->
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Bakımı Yapan Kişi</mat-label>
-      <input matInput formControlName="maintenancePerson" required>
-      <mat-error *ngIf="maintenanceForm.get('maintenancePerson')?.hasError('required')">
-        Bakımı yapan kişi zorunludur.
-      </mat-error>
-      <mat-error *ngIf="maintenanceForm.get('maintenancePerson')?.hasError('minlength')">
-        Bakımı yapan kişi en az 3 karakter olmalıdır.
-      </mat-error>
-      <mat-error *ngIf="maintenanceForm.get('maintenancePerson')?.hasError('maxlength')">
-        Bakımı yapan kişi en fazla 64 karakter olmalıdır.
-      </mat-error>
-    </mat-form-field>
-  </div>
+    <!-- Bakım Yapılma Tarihi -->
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Bakım Yapılma Tarihi</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="maintenanceDate"
+        />
+        <mat-error
+          *ngIf="maintenanceForm.get('maintenanceDate')?.hasError('required')"
+        >
+          Bakım Yapılma Tarihi zorunludur.
+        </mat-error>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-  <!-- Bakım Yapılma Tarihi -->
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Bakım Yapılma Tarihi</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="maintenanceDate">
-      <mat-error *ngIf="maintenanceForm.get('maintenanceDate')?.hasError('required')">
-        Bakım Yapılma Tarihi zorunludur.
-      </mat-error>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </div>
+    <!-- Bakım Yapanın Açıklaması -->
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Bakım Yapanın Açıklaması</mat-label>
+        <textarea matInput formControlName="maintenanceDescription"></textarea>
+      </mat-form-field>
+    </div>
 
-  <!-- Bakım Yapanın Açıklaması -->
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Bakım Yapanın Açıklaması</mat-label>
-      <textarea matInput formControlName="maintenanceDescription"></textarea>
-    </mat-form-field>
-  </div>
+    <!-- Güvenlik Personeli -->
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Güvenlik Personeli</mat-label>
+        <input matInput formControlName="securityPersonnel" required />
+        <mat-error
+          *ngIf="maintenanceForm.get('securityPersonnel')?.hasError('required')"
+        >
+          Güvenlik personeli zorunludur.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            maintenanceForm.get('securityPersonnel')?.hasError('minlength')
+          "
+        >
+          Güvenlik personeli en az 3 karakter olmalıdır.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            maintenanceForm.get('securityPersonnel')?.hasError('maxlength')
+          "
+        >
+          Güvenlik personeli en fazla 64 karakter olmalıdır.
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-  <!-- Güvenlik Personeli -->
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Güvenlik Personeli</mat-label>
-      <input matInput formControlName="securityPersonnel" required>
-      <mat-error *ngIf="maintenanceForm.get('securityPersonnel')?.hasError('required')">
-        Güvenlik personeli zorunludur.
-      </mat-error>
-      <mat-error *ngIf="maintenanceForm.get('securityPersonnel')?.hasError('minlength')">
-        Güvenlik personeli en az 3 karakter olmalıdır.
-      </mat-error>
-      <mat-error *ngIf="maintenanceForm.get('securityPersonnel')?.hasError('maxlength')">
-        Güvenlik personeli en fazla 64 karakter olmalıdır.
-      </mat-error>
-    </mat-form-field>
-  </div>
-
-  <button  mat-flat-button color="primary" type="submit">Formu Gönder</button>
-</form>
+    <button mat-flat-button color="primary" type="submit">Formu Gönder</button>
+  </form>
 </div>

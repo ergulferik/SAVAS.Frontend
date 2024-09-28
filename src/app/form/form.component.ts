@@ -1,5 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { BackendService } from '../services/backend.service';
@@ -15,15 +20,13 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
-
   maintenanceForm!: FormGroup;
   locationControl = new FormControl('');
-  filteredLocations!: Observable<{ group: string, items: string[] }[]>;
-  locations: { group: string, items: string[] }[] = Locations;
-
+  filteredLocations!: Observable<{ group: string; items: string[] }[]>;
+  locations: { group: string; items: string[] }[] = Locations;
 
   constructor(
     private fb: FormBuilder,
@@ -31,16 +34,30 @@ export class FormComponent implements OnInit {
     private backendService: BackendService,
     private DcToastService: DcToastService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.maintenanceForm = this.fb.group({
       maintenanceId: [{ value: '' }],
       locationControl: ['', Validators.required],
-      maintenancePerson: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(64)]],
+      maintenancePerson: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(64),
+        ],
+      ],
       maintenanceDate: [new Date(), [Validators.required]],
       maintenanceDescription: [''],
-      securityPersonnel: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(64)]]
+      securityPersonnel: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(64),
+        ],
+      ],
     });
 
     this.filteredLocations = this.locationControl.valueChanges.pipe(
@@ -49,7 +66,7 @@ export class FormComponent implements OnInit {
     );
 
     this.backendService.generateFormId().subscribe({
-      next: (data) => {
+      next: data => {
         this.maintenanceForm.patchValue({ maintenanceId: data.formId });
       },
       error: () => {
@@ -61,9 +78,9 @@ export class FormComponent implements OnInit {
           position: 'bottom-center',
           time: 3,
           showCloseButton: true,
-          type: 'error'
-        })
-      }
+          type: 'error',
+        });
+      },
     });
 
     if (isPlatformBrowser(this.platformId)) {
@@ -71,7 +88,7 @@ export class FormComponent implements OnInit {
       this.maintenanceForm.patchValue({
         locationControl: storedLocation || '',
         maintenancePerson: localStorage.getItem('maintenancePerson') || '',
-        securityPersonnel: localStorage.getItem('securityPersonnel') || ''
+        securityPersonnel: localStorage.getItem('securityPersonnel') || '',
       });
       if (storedLocation) {
         this.locationControl.setValue(storedLocation);
@@ -79,29 +96,31 @@ export class FormComponent implements OnInit {
     }
   }
 
-  filterLocations(value: string): { group: string, items: string[] }[] {
+  filterLocations(value: string): { group: string; items: string[] }[] {
     const filterValue = value.toLowerCase();
     return this.locations
       .map(group => ({
         group: group.group,
-        items: group.items.filter(item => item.toLowerCase().includes(filterValue))
+        items: group.items.filter(item =>
+          item.toLowerCase().includes(filterValue)
+        ),
       }))
       .filter(group => group.items.length > 0);
-      
   }
 
   onSubmit(): void {
     if (this.maintenanceForm.valid) {
       Swal.fire({
-        title: "Emin Misin?",
-        text: "Girdiğiniz bilgileriniz ile form gönderilecektirsin mi?",
+        title: 'Emin Misin?',
+        text: 'Girdiğiniz bilgileriniz ile form gönderilecektirsin mi?',
         showCancelButton: true,
-        confirmButtonColor: "var(--mdc-protected-button-label-text-color, var(--mat-app-primary))",
-        cancelButtonColor: "var(--mat-form-field-error-text-color)",
+        confirmButtonColor:
+          'var(--mdc-protected-button-label-text-color, var(--mat-app-primary))',
+        cancelButtonColor: 'var(--mat-form-field-error-text-color)',
         focusCancel: true,
-        cancelButtonText: "Hayır",
-        confirmButtonText: "Evet",
-      }).then((result) => {
+        cancelButtonText: 'Hayır',
+        confirmButtonText: 'Evet',
+      }).then(result => {
         if (result.isConfirmed) {
           this.sendForm();
         }
@@ -115,50 +134,63 @@ export class FormComponent implements OnInit {
         position: 'bottom-center',
         time: 3,
         showCloseButton: true,
-        type: 'warn'
-      })
+        type: 'warn',
+      });
     }
   }
   sendForm(): void {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('maintenanceLocation', this.maintenanceForm.value.locationControl || '');
-      localStorage.setItem('maintenancePerson', this.maintenanceForm.value.maintenancePerson || '');
-      localStorage.setItem('securityPersonnel', this.maintenanceForm.value.securityPersonnel || '');
+      localStorage.setItem(
+        'maintenanceLocation',
+        this.maintenanceForm.value.locationControl || ''
+      );
+      localStorage.setItem(
+        'maintenancePerson',
+        this.maintenanceForm.value.maintenancePerson || ''
+      );
+      localStorage.setItem(
+        'securityPersonnel',
+        this.maintenanceForm.value.securityPersonnel || ''
+      );
     }
 
-    this.backendService.submitForm(this.maintenanceForm.value, { responseType: 'blob' as 'json' }).subscribe({
-      next: (response: Blob) => {
-        this.DcToastService.create({
-          allowTimeBar: true,
-          closeButtonPosition: 'right',
-          closeWithHover: true,
-          content: 'Form başarıyla gönderildi!',
-          position: 'bottom-center',
-          time: 3,
-          showCloseButton: true,
-          type: 'success'
-        })
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const pdfUrl = reader.result as string;
-          this.openPdfDialog(pdfUrl);
-        };
-        reader.readAsDataURL(response);
-
-      },
-      error: (error) => {
-        this.DcToastService.create({
-          allowTimeBar: true,
-          closeButtonPosition: 'right',
-          closeWithHover: true,
-          content: 'Bir hata oluştu: ' + (error.error?.message || error.message),
-          position: 'bottom-center',
-          time: 3,
-          showCloseButton: true,
-          type: 'error'
-        })
-      }
-    });
+    this.backendService
+      .submitForm(this.maintenanceForm.value, {
+        responseType: 'blob' as 'json',
+      })
+      .subscribe({
+        next: (response: Blob) => {
+          this.DcToastService.create({
+            allowTimeBar: true,
+            closeButtonPosition: 'right',
+            closeWithHover: true,
+            content: 'Form başarıyla gönderildi!',
+            position: 'bottom-center',
+            time: 3,
+            showCloseButton: true,
+            type: 'success',
+          });
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const pdfUrl = reader.result as string;
+            this.openPdfDialog(pdfUrl);
+          };
+          reader.readAsDataURL(response);
+        },
+        error: error => {
+          this.DcToastService.create({
+            allowTimeBar: true,
+            closeButtonPosition: 'right',
+            closeWithHover: true,
+            content:
+              'Bir hata oluştu: ' + (error.error?.message || error.message),
+            position: 'bottom-center',
+            time: 3,
+            showCloseButton: true,
+            type: 'error',
+          });
+        },
+      });
   }
 
   showDownloadPrompt(url: string): void {
@@ -172,12 +204,14 @@ export class FormComponent implements OnInit {
     this.dialog.open(PdfDialogComponent, {
       data: { pdfSrc: pdfUrl },
       width: '80%',
-      height: '80%'
+      height: '80%',
     });
   }
 
   copyToClipboard(): void {
-    const inputElement = document.querySelector('input[formControlName="maintenanceId"]') as HTMLInputElement;
+    const inputElement = document.querySelector(
+      'input[formControlName="maintenanceId"]'
+    ) as HTMLInputElement;
     if (inputElement) {
       inputElement.select();
       document.execCommand('copy');
@@ -189,8 +223,8 @@ export class FormComponent implements OnInit {
         position: 'bottom-center',
         time: 2,
         showCloseButton: true,
-        type: 'info'
-      })
+        type: 'info',
+      });
     } else {
       this.DcToastService.create({
         allowTimeBar: true,
@@ -200,8 +234,8 @@ export class FormComponent implements OnInit {
         position: 'bottom-center',
         time: 2,
         showCloseButton: true,
-        type: 'warn'
-      })
+        type: 'warn',
+      });
     }
   }
 }

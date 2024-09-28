@@ -7,11 +7,11 @@ import { saveAs } from 'file-saver';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 
 @Component({
-  selector: 'app-admin-genel-ariza',
-  templateUrl: './admin-genel-ariza.component.html',
-  styleUrl: './admin-genel-ariza.component.scss',
+  selector: 'app-admin-ym-bakim',
+  templateUrl: './admin-ym-bakim.component.html',
+  styleUrl: './admin-ym-bakim.component.scss',
 })
-export class AdminGenelArizaComponent {
+export class AdminYmBakimComponent {
   dataSource: any = null;
   months: string[] = [
     'Ocak',
@@ -54,7 +54,7 @@ export class AdminGenelArizaComponent {
   getData() {
     this.backend
       .getDataSource(
-        'general-failure',
+        'escalator-maintenance',
         this.selectedMonthIndex,
         this.selectedYear
       )
@@ -78,7 +78,7 @@ export class AdminGenelArizaComponent {
   }
 
   onInserting(event: any) {
-    this.backend.addDataBlob('general-failure', event.data).subscribe({
+    this.backend.addDataBlob('escalator-maintenance', event.data).subscribe({
       next: () => {
         this.DcToastService.create({
           allowTimeBar: true,
@@ -99,7 +99,7 @@ export class AdminGenelArizaComponent {
   }
 
   onRemove(event: any) {
-    this.backend.removeData('general-failure', event.key).subscribe({
+    this.backend.removeData('escalator-maintenance', event.key).subscribe({
       next: () => {
         this.DcToastService.create({
           allowTimeBar: true,
@@ -121,7 +121,7 @@ export class AdminGenelArizaComponent {
 
   onUpdating(event: any) {
     this.backend
-      .updateData('general-failure', event.key, event.newData)
+      .updateData('escalator-maintenance', event.key, event.newData)
       .subscribe({
         next: () => {
           this.DcToastService.create({
@@ -160,7 +160,7 @@ export class AdminGenelArizaComponent {
 
   onExporting(e: DxDataGridTypes.ExportingEvent) {
     const workbook = new Workbook();
-    const worksheet = workbook.addWorksheet('Genel Arıza Formları');
+    const worksheet = workbook.addWorksheet('Yürüyen Merdiven Bakım Formları');
 
     exportDataGrid({
       component: e.component,
@@ -170,7 +170,7 @@ export class AdminGenelArizaComponent {
       workbook.xlsx.writeBuffer().then(buffer => {
         saveAs(
           new Blob([buffer], { type: 'application/octet-stream' }),
-          `Asansör Bakımları - ${this.selectedMonth}.${this.selectedYear} .xlsx`
+          `Yürüyen Merdiven Bakımları - ${this.selectedMonth}.${this.selectedYear} .xlsx`
         );
       });
     });

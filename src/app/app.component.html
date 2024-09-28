@@ -1,16 +1,14 @@
 <nav class="nav">
-    <img src="assets/savasNavLogo.jpg" routerLink="/menu">
-    @if (isLoggedIn) {
-        <button class="logout-btn" (click)="logout()">
-            <div class="exit-button-container">
-                <mat-icon>exit_to_app</mat-icon>
-                <div class="exit-text">
-                    Çıkış
-                </div>
-            </div>
-        </button>
-    }
+  <img src="assets/savasNavLogo.jpg" routerLink="/menu" />
+  @if (isLoggedIn) {
+    <button class="logout-btn" (click)="logout()">
+      <div class="exit-button-container">
+        <mat-icon>exit_to_app</mat-icon>
+        <div class="exit-text">Çıkış</div>
+      </div>
+    </button>
+  }
 </nav>
 <div class="content">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

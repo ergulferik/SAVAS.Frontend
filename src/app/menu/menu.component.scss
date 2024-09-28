@@ -1,14 +1,62 @@
+.menu-cards {
+  margin-top: 20px;
+  padding-bottom: 56px;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: auto auto;
+  justify-content: space-around;
+  gap: 20px;
+  .card {
+    max-width: 40vw;
+    gap: 20px;
+    box-shadow: 0px 0px 8px #0a35a59c;
+    border: 1px solid #0a35a566;
+    border-radius: var(
+      --mdc-outlined-card-container-shape,
+      var(--mat-app-corner-medium)
+    );
+  }
+}
 
-.menu-cards{
-    margin-top:calc(10vh + 20px);
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-columns: auto auto;
-    justify-content: space-around;
-    gap:20px;
-    .card{
-        max-width: 40vw;
-        gap: 20px;
+@media only screen and (max-width: 480px) {
+  .menu-cards {
+    grid-template-columns: auto;
+    .card {
+      max-width: 80vw;
     }
-    
+  }
+}
+
+.footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: italic;
+  padding: 4px;
+
+  .ef-wrapper{
+    margin-left: 4px;
+    display: flex;
+    background-color: #0a36a5;
+    padding: 2px;
+    padding-right: 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    font-style: normal;
+    .ef-logo{
+      width: 24px;
+      display: flex;
+      align-self: center;
+      margin-right: 4px;
+      border-radius: 8px;
+    }
+  }
+  
 }

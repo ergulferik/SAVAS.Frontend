@@ -8,14 +8,14 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'frontend';
   isLoggedIn = false;
   private routerSubscription!: Subscription;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.routerSubscription = this.router.events.subscribe(event => {
@@ -43,8 +43,8 @@ export class AppComponent implements OnInit, OnDestroy {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Evet, çıkış yap',
-      cancelButtonText: 'Hayır, iptal et'
-    }).then((result) => {
+      cancelButtonText: 'Hayır, iptal et',
+    }).then(result => {
       if (result.isConfirmed) {
         localStorage.removeItem('userData');
         this.router.navigate(['/login']);

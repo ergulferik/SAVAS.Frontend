@@ -1,48 +1,50 @@
 .nav {
-    position: sticky;
-    z-index: 9;
-    width: 100%;
-    background-color: white;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    -webkit-box-shadow: 0px 2px 8px 0px #072777;
--moz-box-shadow: 0px 2px 8px 0px #072777;
-box-shadow: 0px 2px 8px 0px #072777;
+  position: sticky;
+  z-index: 9;
+  width: 100%;
+  background-color: white;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  -webkit-box-shadow: 0px 2px 8px 0px #072777;
+  -moz-box-shadow: 0px 2px 8px 0px #072777;
+  box-shadow: 0px 2px 8px 0px #072777;
 }
 
 .nav img {
-    height: 10vh;
+  height: 10vh;
 }
 
 .logout-btn {
-    background-color: #f44336; /* Kırmızı renk */
-    border: none;
-    color: white;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-    margin-right: 1rem;
-    cursor: pointer;
-    border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));
-
+  background-color: #f44336; /* Kırmızı renk */
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  border-radius: var(
+    --mdc-outlined-card-container-shape,
+    var(--mat-app-corner-medium)
+  );
 }
 
-.exit-button-container{
-    display: flex;
-    align-items: center;
+.exit-button-container {
+  display: flex;
+  align-items: center;
 
-    .exit-text{
-        margin-left: 1rem;
-    }
+  .exit-text {
+    margin-left: 1rem;
+  }
 }
 
 @media only screen and (max-width: 600px) {
-    .exit-text{
-        display: none;
-    }
+  .exit-text {
+    display: none;
+  }
 }

@@ -1,0 +1,371 @@
+<div class="page-wrapper">
+  <div class="custom-toolbar">
+    <dx-select-box
+      [dataSource]="months"
+      [value]="selectedMonth"
+      (valueChange)="onMonthChange($event)"
+      placeholder="Ay Seçin"
+    ></dx-select-box>
+
+    <dx-select-box
+      [dataSource]="years"
+      [value]="selectedYear"
+      (valueChange)="onYearChange($event)"
+      placeholder="Yıl Seçin"
+    ></dx-select-box>
+  </div>
+
+  @defer (when dataSource && dataSource.length > 0) {
+    <div id="data-grid-demo" style="max-width: 100%">
+      <dx-data-grid
+        id="gridContainer"
+        [dataSource]="dataSource"
+        keyExpr="_id"
+        [showBorders]="true"
+        [columnAutoWidth]="true"
+        [columnResizingMode]="'nextColumn'"
+        [allowColumnResizing]="true"
+        [allowColumnReordering]="true"
+        (onRowInserting)="onInserting($event)"
+        (onRowRemoving)="onRemove($event)"
+        (onRowUpdating)="onUpdating($event)"
+        (onExporting)="onExporting($event)"
+        height="80vh"
+        width="90vw"
+      >
+        <dxo-selection mode="single"></dxo-selection>
+        <dxo-scrolling rowRenderingMode="virtual"></dxo-scrolling>
+        <dxo-pager
+          [visible]="true"
+          displayMode="full"
+          [showInfo]="true"
+        ></dxo-pager>
+        <dxo-column-chooser
+          height="340px"
+          #columnChooser
+          [enabled]="true"
+          mode="select"
+        >
+          <dxo-position
+            my="right top"
+            at="right bottom"
+            of=".dx-datagrid-column-chooser-button"
+          ></dxo-position>
+
+          <dxo-search
+            [enabled]="true"
+            [editorOptions]="{ placeholder: 'Sütün Ara...' }"
+          ></dxo-search>
+
+          <dxo-selection
+            [selectByClick]="true"
+            [recursive]="true"
+          ></dxo-selection>
+        </dxo-column-chooser>
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+        <dxo-export
+          [enabled]="true"
+          [allowExportSelectedData]="true"
+        ></dxo-export>
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxo-paging [enabled]="true"></dxo-paging>
+        <dxo-editing
+          mode="popup"
+          [allowUpdating]="true"
+          [allowAdding]="true"
+          [allowDeleting]="true"
+          [useIcons]="true"
+        >
+          <dxo-popup title="Genel Arıza Formu" [showTitle]="true"></dxo-popup>
+        </dxo-editing>
+
+        <dxi-column
+          dataField="user.name"
+          caption="Kullanıcı Adı"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+        <dxi-column
+          dataField="user.surname"
+          caption="Kullanıcı Soyadı"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+        <dxi-column
+          dataField="user.phone"
+          caption="Kullanıcı Telefonu"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="createdAt"
+          dataType="date"
+          caption="Oluşturulma Tarihi"
+          [allowEditing]="false"
+        ></dxi-column>
+        <dxi-column
+          dataField="genelBilgiler.tarih"
+          caption="Tarih"
+          dataType="date"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="genelBilgiler.musteriAdi"
+          caption="Müşteri Adı/Ünvanı"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="genelBilgiler.musteriAdresi"
+          caption="Müşteri Adresi"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="genelBilgiler.mudahaleSaati"
+          caption="Müdahale Saati"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="genelBilgiler.bitisSaati"
+          caption="Bitiş Saati"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="genelBilgiler.kullanilanMalzemeVeOzellikleri"
+          caption="Kullanılan Malzemeler ve Özellikleri"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="mudaheleNedeni.ariza"
+          caption="Arıza"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="mudaheleNedeni.tamirat"
+          caption="Tamirat"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="mudaheleNedeni.revizyon"
+          caption="Revizyon"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.ustVeAltMakinaDairesiTemizligi"
+          caption="Üst ve Alt Makine Dairesi Temizliği"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.basamakRaylariTemizligi"
+          caption="Basamak Rayları Temizliği"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.basamakZinciriGergiKontroluYaglama"
+          caption="Basamak Zinciri Gergi Kontrolü ve Yağlama"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.emniyetDevresiZincirKontakKontrolu"
+          caption="Emniyet Devresi Zincir Kontak Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.basamakEteklikMesafeKontrolu"
+          caption="Basamak Eteklik Mesafe Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.emniyetDevresiEtekSaciKontakKontrolu"
+          caption="Emniyet Devresi Etek Saçı Kontak Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.basamakYuzeyKontrolu"
+          caption="Basamak Yüzey Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.basamakKilavuzPapuclarGreslenmesi"
+          caption="Basamak Kılavuz Papuçların Greslenmesi"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.emniyetDevresiBasamakSarkmaKontakKontrolu"
+          caption="Emniyet Devresi Basamak Sarkma Kontak Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.tarakElemanlariKontrolu"
+          caption="Tarak Elemanları Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.emniyetDevresiTarakKontakKontrolu"
+          caption="Emniyet Devresi Tarak Kontak Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.kupesteBandiTahrikZincirKontrolu"
+          caption="Küpeşte Bandı Tahrik Zincir Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.dublexTahrikZincirGergiKontrolu"
+          caption="Dublex Tahrik Zincir Gergi Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.emniyetDevresiTahrikZincirKopmaKontrolu"
+          caption="Emniyet Devresi Tahrik Zincir Kopma Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.otomatikYaglamaUnitesiYagSeviyeKontrolu"
+          caption="Otomatik Yağlama Ünitesi Yağ Seviye Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.kupesteBandiGerginlikKontrolu"
+          caption="Küpeşte Bandı Gerginlik Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.kupesteBandiRulmanKontrolu"
+          caption="Küpeşte Bandı Rulman Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.emniyetDevresiKupesteBandiKontrolu"
+          caption="Emniyet Devresi Küpeşte Bandı Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.istikametAnahtariAcilStopKontrolu"
+          caption="İstikamet Anahtarı Acil Stop Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.frenMagnetKontrolu"
+          caption="Fren Magnet Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="herAyYapilmasiGerekenler.sonsuzDisliYagSeviyeKontrolu"
+          caption="Sonsuz Dişli Yağ Seviye Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="altiAydaBirYapilmasiGerekenler.tarakVidalarGreslenmesi"
+          caption="Tarak Vidalar Greslenmesi"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="altiAydaBirYapilmasiGerekenler.motorBakimi"
+          caption="Motor Bakımı"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="altiAydaBirYapilmasiGerekenler.frenPapuclarDurmaKontrolu"
+          caption="Fren Papuçları Durma Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="altiAydaBirYapilmasiGerekenler.otomatikZincirYaglamaKontrolu"
+          caption="Otomatik Zincir Yağlama Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="yildaBirYapilmasiGerekenler.basamakMakaralariKontrolu"
+          caption="Basamak Makaraları Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="yildaBirYapilmasiGerekenler.tahrikZincirTemizligi"
+          caption="Tahrik Zincir Temizliği"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="yildaBirYapilmasiGerekenler.merdivenAnaTahrikSaftKontrolu"
+          caption="Merdiven Ana Tahrik Şaft Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="yildaBirYapilmasiGerekenler.kupesteBandiTahrikSaftKontrolu"
+          caption="Küpeşte Bandı Tahrik Şaft Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column dataField="sikayet" caption="Şikayet"></dxi-column>
+
+        <dxi-column dataField="netice" caption="Netice"></dxi-column>
+
+        <dxi-column
+          dataField="binaYoneticisiAdiSoyadi"
+          caption="Bina Yöneticisi Adı Soyadı"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="arizaBakimMontorAdiSoyadi"
+          caption="Arıza Bakım Montörü Adı Soyadı"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+      </dx-data-grid>
+    </div>
+  } @placeholder {}
+</div>

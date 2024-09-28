@@ -1,369 +1,532 @@
-<div class="asansor-bakim-wrapper">
-    <div class="custom-toolbar">
-        <dx-select-box
-            [dataSource]="months"
-            [value]="selectedMonth"
-            (valueChange)="onMonthChange($event)"
-            placeholder="Ay Seçin"></dx-select-box>
+<div class="page-wrapper">
+  <div class="custom-toolbar">
+    <dx-select-box
+      [dataSource]="months"
+      [value]="selectedMonth"
+      (valueChange)="onMonthChange($event)"
+      placeholder="Ay Seçin"
+    ></dx-select-box>
 
-        <dx-select-box
-            [dataSource]="years"
-            [value]="selectedYear"
-            (valueChange)="onYearChange($event)"
-            placeholder="Yıl Seçin"></dx-select-box>
+    <dx-select-box
+      [dataSource]="years"
+      [value]="selectedYear"
+      (valueChange)="onYearChange($event)"
+      placeholder="Yıl Seçin"
+    ></dx-select-box>
+  </div>
+
+  @defer (when dataSource && dataSource.length > 0) {
+    <div id="data-grid-demo" style="max-width: 100%">
+      <dx-data-grid
+        id="gridContainer"
+        [dataSource]="dataSource"
+        keyExpr="_id"
+        [showBorders]="true"
+        [columnAutoWidth]="true"
+        [columnResizingMode]="'nextColumn'"
+        [allowColumnResizing]="true"
+        [allowColumnReordering]="true"
+        (onRowInserting)="onInserting($event)"
+        (onRowRemoving)="onRemove($event)"
+        (onRowUpdating)="onUpdating($event)"
+        (onExporting)="onExporting($event)"
+        height="80vh"
+        width="90vw"
+      >
+        <dxo-selection mode="single"></dxo-selection>
+        <dxo-scrolling rowRenderingMode="virtual"></dxo-scrolling>
+        <dxo-pager
+          [visible]="true"
+          displayMode="full"
+          [showInfo]="true"
+        ></dxo-pager>
+        <dxo-column-chooser
+          height="340px"
+          #columnChooser
+          [enabled]="true"
+          mode="select"
+        >
+          <dxo-position
+            my="right top"
+            at="right bottom"
+            of=".dx-datagrid-column-chooser-button"
+          ></dxo-position>
+
+          <dxo-search
+            [enabled]="true"
+            [editorOptions]="{ placeholder: 'Sütün Ara...' }"
+          ></dxo-search>
+
+          <dxo-selection
+            [selectByClick]="true"
+            [recursive]="true"
+          ></dxo-selection>
+        </dxo-column-chooser>
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+        <dxo-export
+          [enabled]="true"
+          [allowExportSelectedData]="true"
+        ></dxo-export>
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxo-paging [enabled]="true"></dxo-paging>
+        <dxo-editing
+          mode="popup"
+          [allowUpdating]="true"
+          [allowAdding]="true"
+          [allowDeleting]="true"
+          [useIcons]="true"
+        >
+          <dxo-popup title="Asansör Bakım Formu" [showTitle]="true"></dxo-popup>
+        </dxo-editing>
+        <dxi-column
+          dataField="user.name"
+          caption="Ad"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+        <dxi-column
+          dataField="user.surname"
+          caption="Soyad"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+        <dxi-column
+          dataField="user.phone"
+          caption="Telefon"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="createdAt"
+          dataType="date"
+          caption="Oluşturulma tarihi"
+          [allowEditing]="false"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="genelBilgiler.tarih"
+          dataType="date"
+          caption="Tarih"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+        <dxi-column
+          dataField="genelBilgiler.musteriAdi"
+          caption="Müşteri Adı"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+        <dxi-column
+          dataField="genelBilgiler.musteriAdresi"
+          caption="Müşteri Adresi"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kabinBakimi.kapiMekanizmasi"
+          caption="Kapı Mekanizması"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.kapiPatenleri"
+          caption="Kapı Patenleri"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.makaralar"
+          caption="Makaralar"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.kabinButonyeri"
+          caption="Kabin Butonyeri"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.dijitalGostergeler"
+          caption="Dijital Göstergeler"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.halatAskisi"
+          caption="Halı Askısı"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.patenler"
+          caption="Patenler"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.yagdanliklar"
+          caption="Yağdanlıklar"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.klemensKutulari"
+          caption="Klemens Kutuları"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.kontaklar"
+          caption="Kontaklar"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.durusKalitesi"
+          caption="Duruş Kalitesi"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.halatGevsemeKontagi"
+          caption="Halı Gevşeme Kontağı"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="kabinBakimi.revizyonButonu"
+          caption="Revizyon Butonu"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="emniyetBakimlari.frenler"
+          caption="Frenler"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.kapiCamlar"
+          caption="Kapı Camları"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.sogutmaFani"
+          caption="Soğutma Fanı"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.kapiKilitleri"
+          caption="Kapı Kilitleri"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.kapiFisKontaklari"
+          caption="Kapı Fiş Kontakları"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.sinyalLambalari"
+          caption="Sinyal Lambaları"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.fotoseller"
+          caption="Fotoseller"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.stopDugmesi"
+          caption="Stop Düğmesi"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.alarm"
+          caption="Alarm"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.tesisatinGenelDurumu"
+          caption="Tesisatın Genel Durumu"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="emniyetBakimlari.temizlik"
+          caption="Temizlik"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.hidrolikKazan"
+          caption="Hidrolik Kazan"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.takometre"
+          caption="Takometre"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.tahrikKasnagi"
+          caption="Tahrik Kasnağı"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.akuplamaDisliBoglugu"
+          caption="Akuplama Dişli Boğlugu"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.yatakKontrolu"
+          caption="Yatak Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.yag"
+          caption="Yağ"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.kontaktorRolu"
+          caption="Kontaktor Rölesi"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.baglantiKlemensler"
+          caption="Bağlantı Klemensleri"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.motorKabloFani"
+          caption="Motor Kablo Fanı"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.kumandaGerilimOlcumu"
+          caption="Kumanda Gerilim Ölçümü"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.anaSalter"
+          caption="Ana Salter"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.frenManyetik"
+          caption="Fren Manyetik"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.saptrmaKasnagi"
+          caption="Saptırma Kasnağı"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.kumandaTablosu"
+          caption="Kumanda Tablosu"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.makinaMotorTemizligi"
+          caption="Makina Motor Temizliği"
+          dataType="boolean"
+        ></dxi-column>
+        <dxi-column
+          dataField="makinaDairesiKontrolleri.makinaDairesiTemizligi"
+          caption="Makina Dairesi Temizliği"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kapiKontaklari"
+          caption="Kapı Kontakları"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kapiYayiVeZinciri"
+          caption="Kapı Yay ve Zinciri"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kapiAcmaManyetigi"
+          caption="Kapı Açma Manyetiği"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kapiDiktatoru"
+          caption="Kapı Diktatörü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.otomatikKapisiKayislari"
+          caption="Otomatik Kapı Kayışları"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.makaralarMekanizmalar"
+          caption="Makaralar ve Mekanizmalar"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.svicler"
+          caption="Sviçler"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kapiMotorFren"
+          caption="Kapı Motor Fren"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.otomatikKapiPanelVeKablosu"
+          caption="Otomatik Kapı Paneli ve Kablosu"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.butonyerler"
+          caption="Butonyerler"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kuyuBilgiSetleri"
+          caption="Kuyu Bilgi Setleri"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.fleksibilKabloKontrolu"
+          caption="Fleksibil Kablo Kontrolü"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.saptirmaMakaralari"
+          caption="Saptırma Makaraları"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.katKapilari"
+          caption="Kat Kapıları"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kilitKollariAyarlar"
+          caption="Kilit Kolları ve Ayarları"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.halatGevsemeKontagi"
+          caption="Halı Gevşeme Kontağı"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.limitSalterleri"
+          caption="Limit Salterleri"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kabinVeAgirlikRayTijleri"
+          caption="Kabin ve Ağırlık Ray Tijleri"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.regulatorKarsiAgirlikSvic"
+          caption="Regülatör Karşı Ağırlık Sviçi"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.takometre"
+          caption="Takometre"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.dengeZinciri"
+          caption="Denge Zinciri"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.tamponVeSvicler"
+          caption="Tampon ve Sviçler"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kabinHalatlari"
+          caption="Kabin Halatları"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.hidrolikPiston"
+          caption="Hidrolik Piston"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="kuyuVeKabinBaglantilari.kutuVeKuyuDibiTemizligi"
+          caption="Kutu ve Kuyu Dibi Temizliği"
+          dataType="boolean"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="yedekParcaAciklama"
+          caption="Yedek Parça Açıklama"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="bakimEkibi"
+          caption="Bakım Ekibi"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="yetkili"
+          caption="Yetkili"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="baslangicSaati"
+          caption="Başlangıç Saati"
+          dataType="datetime"
+          format="shortTime"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="bitisSaati"
+          caption="Bitiş Saati"
+          dataType="datetime"
+          format="shortTime"
+          [validationRules]="[
+            { type: 'required', message: 'Bu alan zorunludur.' },
+          ]"
+        ></dxi-column>
+
+        <dxi-column dataField="istekVeDusunceler"></dxi-column>
+      </dx-data-grid>
     </div>
-
-    @defer (when dataSource && dataSource.length > 0) {
-    <div id="data-grid-demo" style="max-width: 100%;">
-        <dx-data-grid
-            id="gridContainer"
-            [dataSource]="dataSource"
-            keyExpr="_id"
-            [showBorders]="true"
-            [columnAutoWidth]="true"
-            [columnResizingMode]="'nextColumn'"
-            [allowColumnResizing]="true"
-            [allowColumnReordering]="true"
-            (onRowInserting)="onInserting($event)"
-            (onRowRemoving)="onRemove($event)"
-            (onRowUpdating)="onUpdating($event)"
-            (onExporting)="onExporting($event)"
-            height='80vh'
-            width="90vw">
-
-            <dxo-selection mode="single"></dxo-selection>
-            <dxo-scrolling
-            rowRenderingMode="virtual">
-            </dxo-scrolling>
-            <dxo-pager
-            [visible]="true"
-            displayMode="full"
-            [showInfo]="true"
-          ></dxo-pager>
-            <dxo-column-chooser
-                height="340px"
-                #columnChooser
-                [enabled]="true"
-                mode="select">
-                <dxo-position
-                    my="right top"
-                    at="right bottom"
-                    of=".dx-datagrid-column-chooser-button"></dxo-position>
-
-                <dxo-search
-                    [enabled]="true"
-                    [editorOptions]="{ placeholder: 'Sütün Ara...' }"></dxo-search>
-
-                <dxo-selection
-                    [selectByClick]="true"
-                    [recursive]="true"></dxo-selection>
-            </dxo-column-chooser>
-            <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
-            <dxo-export [enabled]="true"
-                [allowExportSelectedData]="true"></dxo-export>
-            <dxo-filter-row
-                [visible]="true"></dxo-filter-row>
-            <dxo-header-filter [visible]="true"></dxo-header-filter>
-            <dxo-paging [enabled]="true"></dxo-paging>
-            <dxo-editing
-                mode="popup"
-                [allowUpdating]="true"
-                [allowAdding]="true"
-                [allowDeleting]="true"
-                [useIcons]="true">
-                <dxo-popup
-                    title="Asansör Bakım Formu"
-                    [showTitle]="true">
-                </dxo-popup>
-
-            </dxo-editing>
-            <dxi-column dataField="user.name"
-                caption="Ad"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-            <dxi-column dataField="user.surname"
-                caption="Soyad"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-            <dxi-column dataField="user.phone"
-                caption="Telefon"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-
-                <dxi-column dataField="createdAt" dataType="date"
-                caption="Oluşturulma tarihi"
-                [allowEditing]="false"
-                ></dxi-column>
-
-            <dxi-column dataField="genelBilgiler.tarih" dataType="date"
-                caption="Tarih"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-            <dxi-column dataField="genelBilgiler.musteriAdi"
-                caption="Müşteri Adı"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-            <dxi-column dataField="genelBilgiler.musteriAdresi"
-                caption="Müşteri Adresi"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-
-            <dxi-column dataField="kabinBakimi.kapiMekanizmasi"
-                caption="Kapı Mekanizması"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.kapiPatenleri"
-                caption="Kapı Patenleri"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.makaralar"
-                caption="Makaralar"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.kabinButonyeri"
-                caption="Kabin Butonyeri"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.dijitalGostergeler"
-                caption="Dijital Göstergeler"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.halatAskisi"
-                caption="Halı Askısı"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.patenler"
-                caption="Patenler"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.yagdanliklar"
-                caption="Yağdanlıklar"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.klemensKutulari"
-                caption="Klemens Kutuları"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.kontaklar"
-                caption="Kontaklar"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.durusKalitesi"
-                caption="Duruş Kalitesi"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.halatGevsemeKontagi"
-                caption="Halı Gevşeme Kontağı"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="kabinBakimi.revizyonButonu"
-                caption="Revizyon Butonu"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="emniyetBakimlari.frenler"
-                caption="Frenler"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.kapiCamlar"
-                caption="Kapı Camları"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.sogutmaFani"
-                caption="Soğutma Fanı"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.kapiKilitleri"
-                caption="Kapı Kilitleri"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.kapiFisKontaklari"
-                caption="Kapı Fiş Kontakları"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.sinyalLambalari"
-                caption="Sinyal Lambaları"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.fotoseller"
-                caption="Fotoseller"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.stopDugmesi"
-                caption="Stop Düğmesi"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.alarm"
-                caption="Alarm"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.tesisatinGenelDurumu"
-                caption="Tesisatın Genel Durumu"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="emniyetBakimlari.temizlik"
-                caption="Temizlik"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="makinaDairesiKontrolleri.hidrolikKazan"
-                caption="Hidrolik Kazan"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.takometre"
-                caption="Takometre"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.tahrikKasnagi"
-                caption="Tahrik Kasnağı"
-                dataType="boolean"></dxi-column>
-            <dxi-column
-                dataField="makinaDairesiKontrolleri.akuplamaDisliBoglugu"
-                caption="Akuplama Dişli Boğlugu"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.yatakKontrolu"
-                caption="Yatak Kontrolü"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.yag"
-                caption="Yağ"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.kontaktorRolu"
-                caption="Kontaktor Rölesi"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.baglantiKlemensler"
-                caption="Bağlantı Klemensleri"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.motorKabloFani"
-                caption="Motor Kablo Fanı"
-                dataType="boolean"></dxi-column>
-            <dxi-column
-                dataField="makinaDairesiKontrolleri.kumandaGerilimOlcumu"
-                caption="Kumanda Gerilim Ölçümü"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.anaSalter"
-                caption="Ana Salter"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.frenManyetik"
-                caption="Fren Manyetik"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.saptrmaKasnagi"
-                caption="Saptırma Kasnağı"
-                dataType="boolean"></dxi-column>
-            <dxi-column dataField="makinaDairesiKontrolleri.kumandaTablosu"
-                caption="Kumanda Tablosu"
-                dataType="boolean"></dxi-column>
-            <dxi-column
-                dataField="makinaDairesiKontrolleri.makinaMotorTemizligi"
-                caption="Makina Motor Temizliği"
-                dataType="boolean"></dxi-column>
-            <dxi-column
-                dataField="makinaDairesiKontrolleri.makinaDairesiTemizligi"
-                caption="Makina Dairesi Temizliği"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.kapiKontaklari"
-                caption="Kapı Kontakları"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.kapiYayiVeZinciri"
-                caption="Kapı Yay ve Zinciri"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.kapiAcmaManyetigi"
-                caption="Kapı Açma Manyetiği"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.kapiDiktatoru"
-                caption="Kapı Diktatörü"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column
-                dataField="kuyuVeKabinBaglantilari.otomatikKapisiKayislari"
-                caption="Otomatik Kapı Kayışları"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column
-                dataField="kuyuVeKabinBaglantilari.makaralarMekanizmalar"
-                caption="Makaralar ve Mekanizmalar"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.svicler"
-                caption="Sviçler"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.kapiMotorFren"
-                caption="Kapı Motor Fren"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column
-                dataField="kuyuVeKabinBaglantilari.otomatikKapiPanelVeKablosu"
-                caption="Otomatik Kapı Paneli ve Kablosu"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.butonyerler"
-                caption="Butonyerler"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.kuyuBilgiSetleri"
-                caption="Kuyu Bilgi Setleri"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column
-                dataField="kuyuVeKabinBaglantilari.fleksibilKabloKontrolu"
-                caption="Fleksibil Kablo Kontrolü"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.saptirmaMakaralari"
-                caption="Saptırma Makaraları"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.katKapilari"
-                caption="Kat Kapıları"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.kilitKollariAyarlar"
-                caption="Kilit Kolları ve Ayarları"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.halatGevsemeKontagi"
-                caption="Halı Gevşeme Kontağı"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.limitSalterleri"
-                caption="Limit Salterleri"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column
-                dataField="kuyuVeKabinBaglantilari.kabinVeAgirlikRayTijleri"
-                caption="Kabin ve Ağırlık Ray Tijleri"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column
-                dataField="kuyuVeKabinBaglantilari.regulatorKarsiAgirlikSvic"
-                caption="Regülatör Karşı Ağırlık Sviçi"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.takometre"
-                caption="Takometre"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.dengeZinciri"
-                caption="Denge Zinciri"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.tamponVeSvicler"
-                caption="Tampon ve Sviçler"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.kabinHalatlari"
-                caption="Kabin Halatları"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="kuyuVeKabinBaglantilari.hidrolikPiston"
-                caption="Hidrolik Piston"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column
-                dataField="kuyuVeKabinBaglantilari.kutuVeKuyuDibiTemizligi"
-                caption="Kutu ve Kuyu Dibi Temizliği"
-                dataType="boolean"></dxi-column>
-
-            <dxi-column dataField="yedekParcaAciklama"
-                caption="Yedek Parça Açıklama"></dxi-column>
-
-            <dxi-column dataField="bakimEkibi"
-                caption="Bakım Ekibi"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-
-            <dxi-column dataField="yetkili"
-                caption="Yetkili"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-
-            <dxi-column dataField="baslangicSaati"
-                caption="Başlangıç Saati"
-                dataType="datetime"
-                format="shortTime"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-
-            <dxi-column dataField="bitisSaati"
-                caption="Bitiş Saati"
-                dataType="datetime"
-                format="shortTime"
-                [validationRules]='[{type:"required",message:"Bu alan zorunludur."}]'></dxi-column>
-
-            <dxi-column dataField="istekVeDusunceler"> </dxi-column>
-
-        </dx-data-grid>
-    </div>
-    }@placeholder {
-
-    }
+  } @placeholder {}
 </div>

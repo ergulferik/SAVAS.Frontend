@@ -3,17 +3,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '../services/backend.service';
 import { PdfDialogComponent } from '../pdf-dialog/pdf-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ym-bakim',
   templateUrl: './ym-bakim.component.html',
-  styleUrl: './ym-bakim.component.scss'
+  styleUrl: './ym-bakim.component.scss',
 })
 export class YmBakimComponent {
   inspectionForm: FormGroup;
-  isSubmitActive:boolean = true
+  isSubmitActive: boolean = true;
 
-  constructor(private fb: FormBuilder, private backend:BackendService,
+  constructor(
+    private fb: FormBuilder,
+    private backend: BackendService,
     private dialog: MatDialog
   ) {
     this.inspectionForm = this.fb.group({
@@ -23,75 +26,90 @@ export class YmBakimComponent {
         musteriAdresi: ['', Validators.required],
         mudahaleSaati: ['', Validators.required],
         bitisSaati: ['', Validators.required],
-        kullanilanMalzemeVeOzellikleri: ['']
+        kullanilanMalzemeVeOzellikleri: [''],
       }),
       mudahaleNedeni: this.fb.group({
-        bakim: [false],
-        ariza: [false],
-        diger: [false]
+        bakim: [],
+        ariza: [],
+        diger: [],
       }),
       herAyYapilmasiGerekenler: this.fb.group({
-        ustVeAltMakinaDairesiTemizligi: [false],
-        basamakRaylariTemizligi: [false],
-        basamakZinciriGergiKontroluYaglama: [false],
-        emniyetDevresiZincirKontakKontrolu: [false],
-        basamakEteklikMesafeKontrolu: [false],
-        emniyetDevresiEtekSaciKontakKontrolu: [false],
-        basamakYuzeyKontrolu: [false],
-        basamakKilavuzPapuclarGreslenmesi: [false],
-        emniyetDevresiBasamakSarkmaKontakKontrolu: [false],
-        tarakElemanlariKontrolu: [false],
-        emniyetDevresiTarakKontakKontrolu: [false],
-        kupesteBandiTahrikZincirKontrolu: [false],
-        dublexTahrikZincirGergiKontrolu: [false],
-        emniyetDevresiTahrikZincirKopmaKontrolu: [false],
-        otomatikYaglamaUnitesiYagSeviyeKontrolu: [false],
-        kupesteBandiGerginlikKontrolu: [false],
-        kupesteBandiRulmanKontrolu: [false],
-        emniyetDevresiKupesteBandiKontrolu: [false],
-        istikametAnahtariAcilStopKontrolu: [false],
-        frenMagnetKontrolu: [false],
-        sonsuzDisliYagSeviyeKontrolu: [false]
+        ustVeAltMakinaDairesiTemizligi: [],
+        basamakRaylariTemizligi: [],
+        basamakZinciriGergiKontroluYaglama: [],
+        emniyetDevresiZincirKontakKontrolu: [],
+        basamakEteklikMesafeKontrolu: [],
+        emniyetDevresiEtekSaciKontakKontrolu: [],
+        basamakYuzeyKontrolu: [],
+        basamakKilavuzPapuclarGreslenmesi: [],
+        emniyetDevresiBasamakSarkmaKontakKontrolu: [],
+        tarakElemanlariKontrolu: [],
+        emniyetDevresiTarakKontakKontrolu: [],
+        kupesteBandiTahrikZincirKontrolu: [],
+        dublexTahrikZincirGergiKontrolu: [],
+        emniyetDevresiTahrikZincirKopmaKontrolu: [],
+        otomatikYaglamaUnitesiYagSeviyeKontrolu: [],
+        kupesteBandiGerginlikKontrolu: [],
+        kupesteBandiRulmanKontrolu: [],
+        emniyetDevresiKupesteBandiKontrolu: [],
+        istikametAnahtariAcilStopKontrolu: [],
+        frenMagnetKontrolu: [],
+        sonsuzDisliYagSeviyeKontrolu: [],
       }),
       altiAydaBirYapilmasiGerekenler: this.fb.group({
-        tarakVidalarGreslenmesi: [false],
-        motorBakimi: [false],
-        frenPapuclarDurmaKontrolu: [false],
-        otomatikZincirYaglamaKontrolu: [false]
+        tarakVidalarGreslenmesi: [],
+        motorBakimi: [],
+        frenPapuclarDurmaKontrolu: [],
+        otomatikZincirYaglamaKontrolu: [],
       }),
       yildaBirYapilmasiGerekenler: this.fb.group({
-        basamakMakaralariKontrolu: [false],
-        tahrikZincirTemizligi: [false],
-        merdivenAnaTahrikSaftKontrolu: [false],
-        kupesteBandiTahrikSaftKontrolu: [false]
+        basamakMakaralariKontrolu: [],
+        tahrikZincirTemizligi: [],
+        merdivenAnaTahrikSaftKontrolu: [],
+        kupesteBandiTahrikSaftKontrolu: [],
       }),
       sikayet: [''],
       netice: [''],
       binaYoneticisiAdiSoyadi: ['', Validators.required],
-      arizaBakimMontorAdiSoyadi: ['', Validators.required]
+      arizaBakimMontorAdiSoyadi: ['', Validators.required],
     });
   }
 
   onSubmit() {
-    this.isSubmitActive = false;
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const formData = { 
-      ...this.inspectionForm.value, 
-      user: {
-        name: userData.name || '',
-        surname: userData.surname || '', 
-        phone: userData.phone || ''
-      } 
-    }; 
+    Swal.fire({
+      title: 'Emin misiniz?',
+      text: 'Kaydetmek istediğinize emin misiniz ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Evet',
+      cancelButtonText: 'Hayır',
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.isSubmitActive = false;
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        const formData = {
+          ...this.inspectionForm.value,
+          user: {
+            name: userData.name || '',
+            surname: userData.surname || '',
+            phone: userData.phone || '',
+          },
+        };
 
-    this.backend.addDataBlob('escalator-maintenance', formData).subscribe((res) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const pdfUrl = reader.result as string;
-        this.openPdfDialog(pdfUrl);
-      };
+        this.backend
+          .addDataBlob('escalator-maintenance', formData)
+          .subscribe(res => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const pdfUrl = reader.result as string;
+              this.openPdfDialog(pdfUrl);
+            };
 
-      reader.readAsDataURL(new Blob([res]));
+            reader.readAsDataURL(new Blob([res]));
+          });
+      }
     });
   }
 
@@ -100,7 +118,7 @@ export class YmBakimComponent {
       data: { pdfSrc: pdfUrl },
       width: '80%',
       height: '80%',
-      disableClose: true 
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe(() => {

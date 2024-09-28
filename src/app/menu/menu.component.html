@@ -1,50 +1,81 @@
 <div class="menu-cards">
-    <mat-card class="card" appearance="outlined" routerLink="/elevator-maintenance">
-        <mat-card-header>
-            <mat-card-title>Asansör Bakımı</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="assets/savasLogo.jpg">
-    </mat-card>
-    
-    <mat-card class="card" appearance="outlined" routerLink="/general-failure">
-        <mat-card-header>
-            <mat-card-title>Genel Arıza</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="assets/savasLogo.jpg">
-    </mat-card>
+  <mat-card
+    class="card"
+    appearance="outlined"
+    routerLink="/elevator-maintenance">
+    <mat-card-header>
+      <mat-card-title>Asansör Bakımı</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/savasLogo.jpg" />
+  </mat-card>
 
-    <mat-card class="card" appearance="outlined" routerLink="/escalator-maintenance">
-        <mat-card-header>
-            <mat-card-title>Yürüyen Merdiven Bakımı</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="assets/savasLogo.jpg">
-    </mat-card>
+  <mat-card class="card" appearance="outlined" routerLink="/general-failure">
+    <mat-card-header>
+      <mat-card-title>Genel Arıza</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/savasLogo.jpg" />
+  </mat-card>
 
-    <mat-card *ngIf="isAdmin" class="card" appearance="outlined" routerLink="/admin-elevator-maintenance">
-        <mat-card-header>
-            <mat-card-title>ADMİN - Asansör Bakımı</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="assets/savasLogo.jpg">
-    </mat-card>
+  <mat-card
+    class="card"
+    appearance="outlined"
+    routerLink="/escalator-maintenance">
+    <mat-card-header>
+      <mat-card-title>Yürüyen Merdiven Bakımı</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/savasLogo.jpg" />
+  </mat-card>
 
-    <mat-card *ngIf="isAdmin" class="card" appearance="outlined" routerLink="/admin-general-failure">
-        <mat-card-header>
-            <mat-card-title>ADMİN - Genel Arıza</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="assets/savasLogo.jpg">
-    </mat-card>
+  <mat-card
+    *ngIf="isAdmin"
+    class="card"
+    appearance="outlined"
+    routerLink="/admin-elevator-maintenance">
+    <mat-card-header>
+      <mat-card-title>ADMİN - Asansör Bakımı</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/savasLogo.jpg" />
+  </mat-card>
 
-    <mat-card *ngIf="isAdmin" class="card" appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>ADMİN - Yürüyen Merdiven Bakımı</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="assets/savasLogo.jpg">
-    </mat-card>
+  <mat-card
+    *ngIf="isAdmin"
+    class="card"
+    appearance="outlined"
+    routerLink="/admin-general-failure">
+    <mat-card-header>
+      <mat-card-title>ADMİN - Genel Arıza</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/savasLogo.jpg" />
+  </mat-card>
 
-    <mat-card *ngIf="isAdmin" class="card" appearance="outlined" routerLink="/user">
-        <mat-card-header>
-            <mat-card-title>ADMİN - Kullanıcı</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="assets/savasLogo.jpg">
-    </mat-card>
+  <mat-card
+    *ngIf="isAdmin"
+    class="card"
+    appearance="outlined"
+    routerLink="/admin-escalator-maintenance">
+    <mat-card-header>
+      <mat-card-title>ADMİN - Yürüyen Merdiven Bakımı</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/savasLogo.jpg" />
+  </mat-card>
+
+  <mat-card
+    *ngIf="isAdmin"
+    class="card"
+    appearance="outlined"
+    routerLink="/user">
+    <mat-card-header>
+      <mat-card-title>ADMİN - Kullanıcı</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/savasLogo.jpg" />
+  </mat-card>
+</div>
+
+<div class="footer">
+  Created by
+  <a class="ef-wrapper" href="https://ergulferik.github.io/Portfolio-Website/" target="_blank"
+    rel="noopener noreferrer">
+    <img class="ef-logo" src="assets/ef.png" />
+    Ergül FERİK
+  </a>
 </div>

@@ -7,43 +7,60 @@ import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 
-
 @Component({
   selector: 'app-admin-asansor-bakim',
   templateUrl: './admin-asansor-bakim.component.html',
   styleUrl: './admin-asansor-bakim.component.scss',
 })
-export class AdminAsansorBakimComponent implements AfterViewInit{
-
-  dataSource:any = null
+export class AdminAsansorBakimComponent implements AfterViewInit {
+  dataSource: any = null;
   months: string[] = [
-    'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-    'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+    'Ocak',
+    'Şubat',
+    'Mart',
+    'Nisan',
+    'Mayıs',
+    'Haziran',
+    'Temmuz',
+    'Ağustos',
+    'Eylül',
+    'Ekim',
+    'Kasım',
+    'Aralık',
   ];
 
-  years: number[] = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i);
+  years: number[] = Array.from(
+    { length: 10 },
+    (_, i) => new Date().getFullYear() - i
+  );
 
   selectedMonth!: string;
   selectedYear!: number;
-  selectedMonthIndex!:number
+  selectedMonthIndex!: number;
 
-  constructor(private backend:BackendService,
-    private DcToastService:DcToastService
-  ){
+  constructor(
+    private backend: BackendService,
+    private DcToastService: DcToastService
+  ) {
     const now = new Date();
     this.selectedMonth = this.months[now.getMonth()];
     this.selectedMonthIndex = this.months.indexOf(this.selectedMonth) + 1;
-    this.selectedYear = now.getFullYear(); 
-    this.updateDate()
-    }
+    this.selectedYear = now.getFullYear();
+    this.updateDate();
+  }
   ngAfterViewInit(): void {
-    document.getElementById('Layer_1')?.parentElement?.click()
+    document.getElementById('Layer_1')?.parentElement?.click();
   }
 
   getData() {
-    this.backend.getDataSource('elevator-maintenance', this.selectedMonthIndex, this.selectedYear)
+    this.backend
+      .getDataSource(
+        'elevator-maintenance',
+        this.selectedMonthIndex,
+        this.selectedYear
+      )
       .subscribe({
-        next: (res) => {
+        next: res => {
           this.dataSource = res;
         },
         error: () => {
@@ -55,58 +72,57 @@ export class AdminAsansorBakimComponent implements AfterViewInit{
             position: 'bottom-center',
             time: 5,
             showCloseButton: true,
-            type: 'error'
+            type: 'error',
           });
-        }
+        },
       });
   }
 
   onInserting(event: any) {
-    this.backend.addDataBlob('elevator-maintenance', event.data)
-      .subscribe({
-        next: () => {
-          this.DcToastService.create({
-            allowTimeBar: true,
-            closeButtonPosition: 'right',
-            closeWithHover: true,
-            content: 'Form başarıyla gönderildi!',
-            position: 'bottom-center',
-            time: 3,
-            showCloseButton: true,
-            type: 'success'
-          });
-          this.getData();
-        },
-        error: () => {
-          this.getData()
-        }
-      });
+    this.backend.addDataBlob('elevator-maintenance', event.data).subscribe({
+      next: () => {
+        this.DcToastService.create({
+          allowTimeBar: true,
+          closeButtonPosition: 'right',
+          closeWithHover: true,
+          content: 'Form başarıyla gönderildi!',
+          position: 'bottom-center',
+          time: 3,
+          showCloseButton: true,
+          type: 'success',
+        });
+        this.getData();
+      },
+      error: () => {
+        this.getData();
+      },
+    });
   }
 
   onRemove(event: any) {
-    this.backend.removeData('elevator-maintenance', event.key)
-      .subscribe({
-        next: () => {
-          this.DcToastService.create({
-            allowTimeBar: true,
-            closeButtonPosition: 'right',
-            closeWithHover: true,
-            content: 'Veri başarıyla silindi',
-            position: 'bottom-center',
-            time: 3,
-            showCloseButton: true,
-            type: 'success'
-          });
-          this.getData();
-        },
-        error: () => {
-          this.getData()
-        }
-      });
+    this.backend.removeData('elevator-maintenance', event.key).subscribe({
+      next: () => {
+        this.DcToastService.create({
+          allowTimeBar: true,
+          closeButtonPosition: 'right',
+          closeWithHover: true,
+          content: 'Veri başarıyla silindi',
+          position: 'bottom-center',
+          time: 3,
+          showCloseButton: true,
+          type: 'success',
+        });
+        this.getData();
+      },
+      error: () => {
+        this.getData();
+      },
+    });
   }
 
   onUpdating(event: any) {
-    this.backend.updateData('elevator-maintenance', event.key, event.newData)
+    this.backend
+      .updateData('elevator-maintenance', event.key, event.newData)
       .subscribe({
         next: () => {
           this.DcToastService.create({
@@ -117,18 +133,18 @@ export class AdminAsansorBakimComponent implements AfterViewInit{
             position: 'bottom-center',
             time: 3,
             showCloseButton: true,
-            type: 'success'
+            type: 'success',
           });
           this.getData();
         },
         error: () => {
-          this.getData()
-        }
+          this.getData();
+        },
       });
   }
   onMonthChange(month: string) {
     this.selectedMonthIndex = this.months.indexOf(month) + 1;
-    this.selectedMonth = month
+    this.selectedMonth = month;
     this.updateDate();
   }
 
@@ -139,7 +155,7 @@ export class AdminAsansorBakimComponent implements AfterViewInit{
 
   updateDate() {
     if (this.selectedMonth && this.selectedYear) {
-      this.getData()
+      this.getData();
     }
   }
 
@@ -152,10 +168,12 @@ export class AdminAsansorBakimComponent implements AfterViewInit{
       worksheet,
       autoFilterEnabled: true,
     }).then(() => {
-      workbook.xlsx.writeBuffer().then((buffer) => {
-        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), `Asansör Bakımları - ${this.selectedMonth}.${this.selectedYear} .xlsx`);
+      workbook.xlsx.writeBuffer().then(buffer => {
+        saveAs(
+          new Blob([buffer], { type: 'application/octet-stream' }),
+          `Asansör Bakımları - ${this.selectedMonth}.${this.selectedYear} .xlsx`
+        );
       });
     });
   }
-  
 }

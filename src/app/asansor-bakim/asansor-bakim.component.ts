@@ -3,24 +3,27 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BackendService } from '../services/backend.service';
 import { PdfDialogComponent } from '../pdf-dialog/pdf-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-asansor-bakim',
   templateUrl: './asansor-bakim.component.html',
-  styleUrl: './asansor-bakim.component.scss'
+  styleUrl: './asansor-bakim.component.scss',
 })
 export class AsansorBakimComponent {
   inspectionForm: FormGroup;
-  isSubmitActive:boolean = true
+  isSubmitActive: boolean = true;
 
-  constructor(private fb: FormBuilder, private backend:BackendService,
+  constructor(
+    private fb: FormBuilder,
+    private backend: BackendService,
     private dialog: MatDialog
   ) {
     this.inspectionForm = this.fb.group({
       genelBilgiler: this.fb.group({
         tarih: [new Date(), Validators.required],
         musteriAdi: ['', Validators.required],
-        musteriAdresi: ['', Validators.required]
+        musteriAdresi: ['', Validators.required],
       }),
       kabinBakimi: this.fb.group({
         kapiMekanizmasi: [],
@@ -35,7 +38,7 @@ export class AsansorBakimComponent {
         kontaklar: [],
         durusKalitesi: [],
         halatGevsemeKontagi: [],
-        revizyonButonu: []
+        revizyonButonu: [],
       }),
       emniyetBakimlari: this.fb.group({
         frenler: [],
@@ -48,7 +51,7 @@ export class AsansorBakimComponent {
         stopDugmesi: [],
         alarm: [],
         tesisatinGenelDurumu: [],
-        temizlik: []
+        temizlik: [],
       }),
       makinaDairesiKontrolleri: this.fb.group({
         hidrolikKazan: [],
@@ -66,7 +69,7 @@ export class AsansorBakimComponent {
         saptrmaKasnagi: [],
         kumandaTablosu: [],
         makinaMotorTemizligi: [],
-        makinaDairesiTemizligi: []
+        makinaDairesiTemizligi: [],
       }),
       kuyuVeKabinBaglantilari: this.fb.group({
         kapiKontaklari: [],
@@ -93,37 +96,52 @@ export class AsansorBakimComponent {
         tamponVeSvicler: [],
         kabinHalatlari: [],
         hidrolikPiston: [],
-        kutuVeKuyuDibiTemizligi: []
+        kutuVeKuyuDibiTemizligi: [],
       }),
       yedekParcaAciklama: [''],
       bakimEkibi: ['', Validators.required],
       yetkili: ['', Validators.required],
       baslangicSaati: ['', Validators.required],
       bitisSaati: ['', Validators.required],
-      istekVeDusunceler: ['']
+      istekVeDusunceler: [''],
     });
   }
 
   onSubmit() {
-    this.isSubmitActive = false;
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const formData = { 
-      ...this.inspectionForm.value, 
-      user: {
-        name: userData.name || '',
-        surname: userData.surname || '', 
-        phone: userData.phone || ''
-      } 
-    }; 
+    Swal.fire({
+      title: 'Emin misiniz?',
+      text: 'Kaydetmek istediğinize emin misiniz ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Evet',
+      cancelButtonText: 'Hayır',
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.isSubmitActive = false;
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        const formData = {
+          ...this.inspectionForm.value,
+          user: {
+            name: userData.name || '',
+            surname: userData.surname || '',
+            phone: userData.phone || '',
+          },
+        };
 
-    this.backend.addDataBlob('elevator-maintenance', formData).subscribe((res) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const pdfUrl = reader.result as string;
-        this.openPdfDialog(pdfUrl);
-      };
+        this.backend
+          .addDataBlob('elevator-maintenance', formData)
+          .subscribe(res => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const pdfUrl = reader.result as string;
+              this.openPdfDialog(pdfUrl);
+            };
 
-      reader.readAsDataURL(new Blob([res]));
+            reader.readAsDataURL(new Blob([res]));
+          });
+      }
     });
   }
 
@@ -132,7 +150,7 @@ export class AsansorBakimComponent {
       data: { pdfSrc: pdfUrl },
       width: '80%',
       height: '80%',
-      disableClose: true 
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe(() => {

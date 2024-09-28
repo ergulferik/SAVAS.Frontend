@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -19,13 +23,15 @@ export class AuthGuard implements CanActivate {
 
     const targetUrl = state.url;
 
-    if (targetUrl.startsWith('/admin') && (!isLoggedIn || user.role !== 'admin')) {
+    if (
+      targetUrl.startsWith('/admin') &&
+      (!isLoggedIn || user.role !== 'admin')
+    ) {
       this.router.navigate(['/menu']);
       return false;
     }
 
     if (!isLoggedIn) {
-
       this.router.navigate(['/login']);
       return false;
     }

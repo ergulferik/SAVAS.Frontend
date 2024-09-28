@@ -10,23 +10,49 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { AdminGenelArizaComponent } from './admin-genel-ariza/admin-genel-ariza.component';
+import { AdminYmBakimComponent } from './admin-ym-bakim/admin-ym-bakim.component';
 
 const routes: Routes = [
   { path: 'form', component: FormComponent, canActivate: [AuthGuard] },
-  { path: 'elevator-maintenance', component: AsansorBakimComponent, canActivate: [AuthGuard] },
-  { path: 'escalator-maintenance', component: YmBakimComponent, canActivate: [AuthGuard] },
+  {
+    path: 'elevator-maintenance',
+    component: AsansorBakimComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'escalator-maintenance',
+    component: YmBakimComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'general-failure', component: GenelArizaComponent, canActivate: [AuthGuard] },
+  {
+    path: 'general-failure',
+    component: GenelArizaComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'login', component: LoginComponent },
-  { path: 'admin-elevator-maintenance', component: AdminAsansorBakimComponent, canActivate: [AuthGuard] },
-  { path: 'admin-general-failure', component: AdminGenelArizaComponent, canActivate: [AuthGuard] },
+  {
+    path: 'admin-elevator-maintenance',
+    component: AdminAsansorBakimComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin-escalator-maintenance',
+    component: AdminYmBakimComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin-general-failure',
+    component: AdminGenelArizaComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '', redirectTo: '/menu', pathMatch: 'full' },
-  { path: '**', redirectTo: '/menu' }
+  { path: '**', redirectTo: '/menu' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

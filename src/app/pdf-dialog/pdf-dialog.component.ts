@@ -4,10 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-pdf-dialog',
   templateUrl: './pdf-dialog.component.html',
-  styleUrls: ['./pdf-dialog.component.scss']
+  styleUrls: ['./pdf-dialog.component.scss'],
 })
 export class PdfDialogComponent implements OnInit {
-  pdfSrc: any
+  pdfSrc: any;
 
   constructor(
     public dialogRef: MatDialogRef<PdfDialogComponent>,
